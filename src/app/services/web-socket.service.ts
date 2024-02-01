@@ -114,35 +114,20 @@ export class WebSocketService implements OnDestroy{
   onUserJoin( payload : any ) : void{
     const message : StatusMessage = JSON.parse(payload.body)
       this.user.next({...message.users});
+      console.log(message.history);
       this.chatSubject.next({...this.chatSubject.value,...this.getUserChatHistory(message.history)})
   }
 
-  getUserChatHistory(messages : Array<Message>){
-    let chatHistory :  Record<string,Array<Message>> = {};
-    messages.forEach((message) => {
-    let key: string;
-    
-    if (this.username === message.sender) {
-      key = message.receiver + "-" + message.sender;
-    } else {
-      key = message.sender + "-" + message.receiver;
+  getUserChatHistory(messages : Record<string,Array<Message>>){
+  let chatHistory :  Record<string,Array<Message>> = {};
+  for (const key in messages){
+    if(messages.hasOwnProperty(key)){
+      chatHistory[key + '-' + this.username] = messages[key];
     }
-
-    // Ensure the chat record exists
-    const existingRecord = chatHistory[key] || [];
-
-    // Append the message to the chat record
-    const updatedChatRecord = [...existingRecord, message];
-
-    // Update the chatHistory object with the new chat record
-    chatHistory = {
-      ...chatHistory,
-      [key]: updatedChatRecord,
-    };
-  });
-
+  }
   return chatHistory;
   }
+
 
   send(messageContent: string): void {
     if (messageContent && this.stompClient) {
