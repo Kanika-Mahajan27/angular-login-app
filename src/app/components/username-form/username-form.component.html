@@ -1,0 +1,14 @@
+<div id="username-page">
+    <div class="username-page-container">
+        <h1 class="title">Enter your name</h1>
+        <form (ngSubmit)="connect()" [formGroup]="usernameForm">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Name"
+                       autocomplete="off" class="form-control" formControlName="username" name="username" required />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="accent username-submit" [disabled]="!usernameForm.valid">Start a Conversation!</button>
+            </div>
+        </form>
+    </div>
+</div>

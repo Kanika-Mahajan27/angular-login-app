@@ -1,0 +1,13 @@
+<div class="container mt-4">
+    <div class="h5">Users</div>
+    <div class="user-list" *ngFor="let userStatus of userStatuses">
+        <div *ngIf="!isCurrentUser(userStatus.key)" class="card" (click)="changeReceiver(userStatus.key)"
+            [ngClass]="{'active' : isCurrentReceiver(userStatus.key)}">
+            <div class="card-body">
+                <p>{{userStatus.key}}</p>
+                <span class="badge"
+                    [ngClass]="isUserActive(userStatus.key)? 'text-bg-success'  : 'text-bg-secondary'">{{userStatus.value}}</span>
+                </div>
+        </div>
+    </div>
+</div>

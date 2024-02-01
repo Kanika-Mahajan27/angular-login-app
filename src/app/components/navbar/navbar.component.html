@@ -1,0 +1,31 @@
+    <nav class="navbar container align-items-center" >
+        
+        <div class="navbar_right mt-3">
+            <h1 (click)="navigateToHome()">Login app</h1>
+        </div>
+        <div *ngIf="otpService.otpVerified==false" class="navbar">
+            
+            <div>
+                <button (click)="navigateToLoginPage()" class="btn btn-success">Login</button>
+            </div>
+            <div class="ms-2">
+                <button (click)="navigateToRegisterPage()" class="btn btn-primary">Register</button>
+            </div>
+
+        </div>
+        
+        <div *ngIf="otpService.otpVerified" class="navbar ">
+        
+            <span class="navbar-brand mb-0 h1">
+                Logged in as {{loginService.getLoggedUser()?.name}}
+            </span>
+            
+            <div>
+                <button (click)="connect()" class="btn btn-primary">Chat</button>
+            </div>
+            <div>
+                <button class="btn btn-danger ms-2" (click)="logout()">Logout</button>
+            </div>
+        </div>
+        
+    </nav>

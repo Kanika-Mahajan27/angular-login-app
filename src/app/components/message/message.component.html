@@ -1,0 +1,13 @@
+<div class="message-container" *ngFor="let message of messageArray">
+    <div class="message-container" [ngClass]="{'text-end':checkSender(message)}">
+        <div class="sender">{{ message.sender }}</div>
+        <div class="content" [ngClass]="checkSender(message) ? 'badge-bg-success' : 'badge-bg-secondary'">
+            <p>
+                {{ message.content }}
+            </p>
+            <p><small class="small">{{message.timestamp}}</small></p>
+        </div>
+
+    </div>  
+    <br/>
+</div>

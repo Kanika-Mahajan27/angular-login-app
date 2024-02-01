@@ -1,0 +1,23 @@
+/* body{
+  width: 100vw;
+  min-height: 100vh;
+  background-color: rgb(255, 255, 255);
+  border: 100px solid transparent;
+}
+form {
+  margin: auto;
+  max-width: 700px;
+  background-color:rgb(249, 234, 234);
+  padding: 30px;
+  border-radius: 10px;
+}
+h2 {
+  color: rgb(0, 0, 0);
+  text-align: center;
+}
+button{
+  margin-left: 250px;
+}
+.login-box{
+  border: transparent;
+} */

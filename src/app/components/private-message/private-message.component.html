@@ -1,0 +1,17 @@
+<div class="chat-container">
+
+        <ul id="messageArea">
+            <div *ngIf="messageArrayLength > 0">
+                <app-message></app-message>
+            </div>
+        </ul>
+    <form (ngSubmit)="send(messageForm.value.message)" [formGroup]="messageForm" id="messageForm" name="messageForm" nameForm="messageForm">
+        <div class="form-group">
+            <div class="input-group clearfix">
+                <input type="text" id="message" placeholder="Type your message..."
+                       autocomplete="off" class="form-control" formControlName="message" />
+                <button type="submit" class="primary">Send</button>
+            </div>
+        </div>
+    </form>
+</div>
