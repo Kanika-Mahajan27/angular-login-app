@@ -18,7 +18,11 @@ export class LoginComponent {
   loginError: boolean = false;
   email:string="";
   otpSent:boolean = false;
-
+  linkedInCred = {
+    clientID : "86h5om06u16k4b",
+    redirectUri : "http://localhost:4200/linkedInLogin",
+    scope : "email%20profile%20openid"
+  }
   loginform: FormGroup = new FormGroup({
     email: new FormControl({ value: '', disabled: false },[Validators.required, Validators.minLength(6), Validators.maxLength(25), Validators.pattern(/^\S+@\S+\.\S+$/)]),
     password: new FormControl({ value: '', disabled: false },[Validators.required, Validators.minLength(4), Validators.maxLength(20), ])
@@ -104,6 +108,9 @@ export class LoginComponent {
   }
   loginWithGoogle(){
     this._service.loginWIthGoogle();
+  }
+  loginWithLinkedIn() {
+    window.location.href = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${this.linkedInCred.clientID}&redirect_uri=${this.linkedInCred.redirectUri}&state=example&scope=${this.linkedInCred.scope}`
   }
 }
 

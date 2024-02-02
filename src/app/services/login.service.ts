@@ -86,4 +86,8 @@ export class LoginService {
       console.error('Access Token not found in the callback');
     }
   }
+
+  handleLinkedInLogin(code : string){
+    return this._http.get(`${this.BASE_URL}/user/linkedin-auth?code=${code}`);
+  }
 }
