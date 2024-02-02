@@ -18,6 +18,13 @@ h2 {
 button{
   margin-left: 250px;
 }
+*/
 .login-box{
-  border: transparent;
-} */
+  max-width: 50%;
+  }
+  
+  @media (max-width : 768px) {
+    .login-box {
+      max-width: 100%;
+    }
+  }

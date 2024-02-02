@@ -24,6 +24,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DatePipe } from '@angular/common';
+import { LinkedinLoginComponent } from './components/linkedin-login/linkedin-login.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DatePipe } from '@angular/common';
     MessageComponent,
     PrivateMessageComponent,
     UserListComponent,
-    ChatboxContainerComponent
+    ChatboxContainerComponent,
+    LinkedinLoginComponent
   ],
   imports: [
     BrowserModule,

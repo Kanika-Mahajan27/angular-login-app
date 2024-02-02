@@ -1,42 +1,54 @@
 <div class = "container-sm mt-5 d-flex-reverse align-items-center">
     <div class="login-box container">
-        <h2>Login</h2>
-          
-        
+      <div class="card">
+        <div class="card-header">
+          Login
+        </div>
+        <div class="card-body">
           <div *ngIf="loginError" type="danger" class="alert alert-danger mt-3" role="alert">
             Bad Credentials
           </div>
-      
-        <form [formGroup] ="loginform" (ngSubmit)="loginUser()">
+          <form [formGroup]="loginform" (ngSubmit)="loginUser()" class="loginForm">
             <small class="text-danger">{{msg}}</small>
             <div class="form-group mt-3 ">
-              <label for="email" class="form-label">Email</label>
-              <br>
-              <input type="text" name="email" id="email" title="Enter valid email" placeholder="Enter email" class="form-control " [(ngModel)]="user.email" formControlName="email" required
-                    [disabled]="otpRequired">
-              
+              <div class="input-group mb3">
+                <span class="input-group-text">Email </span>
+                <input type="text" name="email" id="email" title="Enter valid email" placeholder="example@domain.com"
+                  class="form-control " [(ngModel)]="user.email" formControlName="email" required [disabled]="otpRequired">
+              </div>
+              <!-- <label for="email" class="form-label">Email</label> -->
               <!-- <span style="color:red;" *ngIf="emailVal && emailVal.touched">Enter a valid email</span> -->
-              <br>
             </div>
-      
-            <div class="form-group mt-3">
-            <label for="password" class="form-label">Password</label>
-            <br>
-            <input type="password" title="Enter valid password" placeholder="Enter password" class="form-control" [(ngModel)]="user.password" name="password" formControlName="password"
-            [disabled]="otpRequired" required>
-            
-            <span style="color:red;" *ngIf="passVal && passVal.invalid && passVal.touched">Enter a valid password</span>
+              <div class="form-group mt-3">
+                <div class="input-group mb3">
+                  <span class="input-group-text">Password</span>
+                  <input type="password" title="Enter valid password" placeholder="Enter password" class="form-control"
+                    [(ngModel)]="user.password" name="password" formControlName="password" [disabled]="otpRequired" required>
+                </div>
+                <!-- <label for="password" class="form-label">Password</label> -->
+                
+                <span style="color:red;" *ngIf="passVal && passVal.invalid && passVal.touched">Enter a valid password</span>
+                </div>
+                <br>
+            <div class="row text-align-center">
+              <div *ngIf="!otpRequired" class="form-group">
+                <div>
+                  <button type="submit" class="btn btn-dark">Login</button>
+                  <a *ngIf="!otpRequired" style="text-decoration: underline; margin-left: 215px;" [routerLink]="['/register']">New User?
+                    Register Here</a>
+                </div>
+                </div>
+
+                </div>
+                <!-- <input *ngIf="otpRequired" type="submit" class="btn btn-success mt-5" value="Login"> -->
+                </form>
         </div>
-        <br>
-          <div *ngIf = "!otpRequired" class="form-group">        
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-dark">Login</button>
-            </div>
-          </div>
-          <a *ngIf="!otpRequired" style="text-decoration: underline; margin-left: 215px;" [routerLink]="['/register']">New User? Register Here</a>
-      
-          <!-- <input *ngIf="otpRequired" type="submit" class="btn btn-success mt-5" value="Login"> -->
-        </form>
+        <hr>
+        <div *ngIf="!otpRequired" class="d-flex justify-content-center linkedin-login mb-3 mt-1">
+          <button (click)="loginWithLinkedIn()" class="btn btn-primary"><i class="bi bi-linkedin"></i> Login With
+            LinkedIn</button>
+        </div>
+        </div>
       </div>
 
       <div *ngIf="loginSuccess" class="alert alert-success mt-3" role="alert">
@@ -45,9 +57,7 @@
       <div *ngIf = "otpSent" class="row">
         <app-otp [userEmail]="email"></app-otp>
       </div>
-      <div *ngIf="!otpRequired">
-        <button (click)="loginWithGoogle()">Login With Google</button>
-      </div>
+
       
 </div>
     

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { WebSocketService } from 'src/app/services/web-socket.service';
@@ -33,6 +33,16 @@ export class NavbarComponent {
     this.router.navigate(['/home']);
   }
   logout(): void {
+    this.leave();
     this.loginService.logoutUser();
+  }
+
+    @HostListener('window:beforeunload', ['$event'])
+  unloadHandler(event: Event): void {
+    this.websocketService.leaveChat(this.websocketService.username);
+  }
+
+  leave(){
+    this.websocketService.leaveChat(this.websocketService.username);    
   }
 }
