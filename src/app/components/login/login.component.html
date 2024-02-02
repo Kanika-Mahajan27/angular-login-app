@@ -43,6 +43,12 @@
                 <!-- <input *ngIf="otpRequired" type="submit" class="btn btn-success mt-5" value="Login"> -->
                 </form>
         </div>
+              <div *ngIf="loginSuccess" class="alert alert-success mt-3" role="alert">
+                Credentials Matched, an OTP has been sent to your mail. Please enter OTP to verify user!
+              </div>
+              <div *ngIf="otpSent" class="row">
+                <app-otp [userEmail]="email"></app-otp>
+              </div>
         <hr>
         <div *ngIf="!otpRequired" class="d-flex justify-content-center linkedin-login mb-3 mt-1">
           <button (click)="loginWithLinkedIn()" class="btn btn-primary"><i class="bi bi-linkedin"></i> Login With
@@ -51,12 +57,7 @@
         </div>
       </div>
 
-      <div *ngIf="loginSuccess" class="alert alert-success mt-3" role="alert">
-        Credentials Matched, an OTP has been sent to your mail. Please enter OTP to verify user!
-      </div>
-      <div *ngIf = "otpSent" class="row">
-        <app-otp [userEmail]="email"></app-otp>
-      </div>
+
 
       
 </div>
