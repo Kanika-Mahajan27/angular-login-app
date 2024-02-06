@@ -1,0 +1,17 @@
+<div class="card  border-dark  mt-3 mb-3">
+    <div class="card-header">{{post.heading}}</div>
+    <div class="card-body">
+        <p class="card-text">{{post.content.substring(0,101)}}</p>
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-auto">
+                <i class="bi bi-pen"></i> {{post.author}}
+            </div>
+
+            <div class="col-auto">
+                <i class="bi bi-clock"></i> {{formatDate(post.createdAt)}}
+            </div>
+        </div>
+    </div>
+</div>

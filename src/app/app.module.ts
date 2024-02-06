@@ -25,6 +25,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { DatePipe } from '@angular/common';
 import { LinkedinLoginComponent } from './components/linkedin-login/linkedin-login.component';
+import { FeedComponent } from './components/feed/feed.component';
+import { PostComponent } from './components/post/post.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { LinkedinLoginComponent } from './components/linkedin-login/linkedin-log
     PrivateMessageComponent,
     UserListComponent,
     ChatboxContainerComponent,
-    LinkedinLoginComponent
+    LinkedinLoginComponent,
+    FeedComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,

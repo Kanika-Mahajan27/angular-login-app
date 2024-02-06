@@ -13,7 +13,7 @@ import { LinkedinLoginComponent } from './components/linkedin-login/linkedin-log
 const routes: Routes = [
   {
     path:'',
-    component:HomeComponent,
+    component:LoginComponent,
     pathMatch:'full'
   },
   {
@@ -29,7 +29,7 @@ const routes: Routes = [
   {
     path:"home",
     component:HomeComponent,
-    // canActivate:[AuthguardService]
+    canActivate:[AuthguardService]
   },
   {
     path:"register",
