@@ -31,34 +31,39 @@
     </nav> -->
     <nav class="navbar navbar-expand-lg bg-body-secondary">
         <div class="container-fluid">
-            <a class="navbar-brand text-dark" href="/home"><i class="bi bi-window-sidebar"></i> App</a>
-            <ul class="navbar-nav ">
+            <div class="navbar-brand text-dark">
+                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar"><i
+                        class="bi bi-window-sidebar"></i> App
+                    <i class="bi bi-chevron-right"></i></button>
+            </div>
+            <ul class="navbar-nav">
                 <div *ngIf="otpService.otpVerified == false && loginService.getLoggedUser() == null"
                     class="d-flex flex-row">
                     <li class="nav-item p-1">
+                        <a href="/home" class="nav-link text-dark">Home</a>
+                        </li>
+                        <li class="nav-item p-1">
                         <a class="nav-link text-dark" href="/login">Login</a>
                     </li>
                     <li class="nav-item p-1">
                         <a class="nav-link text-dark" href="/register">Register</a>
                     </li>
                 </div>
-                <div *ngIf="otpService.otpVerified && loginService.getLoggedUser() != null" class="d-flex flex-row mt-2">
+                <div *ngIf="otpService.otpVerified || loginService.getLoggedUser() != null" class="d-flex flex-row mt-2">
+                    <li class="nav-item p-1">
+                        <a href="/home" class="nav-link text-dark">Home</a>
+                    </li>
                     <li class="nav-item p-1">
                         <p class="nav-link text-dark"><i class="bi bi-person-circle"></i> Welcome
                             {{loginService.getLoggedUser()?.name}}</p>
-                    </li>
-                    <li class="nav-item p-1">
-                        <button class="btn btn-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
-                            aria-controls="sidebar"><i class="bi bi-list"></i></button>
                     </li>
                 </div>
             </ul>
         </div>
     </nav>
-<div class="offcanvas offcanvas-end" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="sidebarLabel"><i class="bi bi-person-circle"></i> Welcome
-            {{loginService.getLoggedUser()?.name}}</h5>
+        <h5 class="offcanvas-title" id="sidebarLabel"><i class="bi bi-window-sidebar"></i> App</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <hr>

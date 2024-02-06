@@ -25,7 +25,9 @@ export class LinkedinLoginComponent {
   exchangeCodeForToken(code: string) {
     this.loginService.handleLinkedInLogin(code).subscribe({
       next : (res : any) => {
-        localStorage.setItem("token",res["authToken"]);
+        console.log(res);
+        
+        localStorage.setItem("authToken",res["token"]);
         this.loginService.storeLoggedUser(res["user"]);
         this.loginService.loggedUser = res["user"];
         this.router.navigate(['/home']);
