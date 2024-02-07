@@ -1,21 +1,40 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Post } from 'src/app/model/post.model';
 import { LoginService } from 'src/app/services/login.service';
 import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.css']
+  selector: 'app-post-details',
+  templateUrl: './post-details.component.html',
+  styleUrls: ['./post-details.component.css']
 })
-export class PostComponent  {
+export class PostDetailsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, public postsService: PostsService, private loginService : LoginService, private router:Router) { }
+  post!: Post;
 
-  @Input()
-  post! : Post;
+  constructor(private route:ActivatedRoute, private postsService:PostsService, private loginService:LoginService){}
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const postId = params.get('id'); // Get postId from URL
+      if (postId) {
+        this.fetchPostDetails(postId); // Fetch post details using postId
+      }
+    });
+  }
+
+  fetchPostDetails(postId: string) {
+    this.postsService.getPostDetails(postId).subscribe({
+      next: (post: Post) => {
+        this.post = post;
+      },
+      error: (err) => {
+        console.error(err);
+        // Handle error
+      }
+    });
+  }
 
   formatDate(date : Date) {
     const datePipe = new DatePipe("en-US");
@@ -42,11 +61,6 @@ export class PostComponent  {
       }
             
     });
-  }
-
-  // Method to navigate to post details page
-  goToPostDetails(postId: string) {
-    this.router.navigate(['/post-details', postId]);
   }
 
   isPostLiked(postId: string): boolean {

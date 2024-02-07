@@ -1,4 +1,5 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PostPage } from 'src/app/model/post-page.model';
 import { Post } from 'src/app/model/post.model';
 import { PostsService } from 'src/app/services/posts.service';
@@ -13,8 +14,8 @@ export class FeedComponent implements OnInit{
   page : number = 1;
   size : number = 7;
   total : number = 0
-  
-  constructor(private postService : PostsService){}
+  post! : Post;
+  constructor(private postService : PostsService, private router : Router, private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void {
     this.loadPosts();
@@ -45,6 +46,8 @@ export class FeedComponent implements OnInit{
     return this.posts.length >= this.total;
   }
 
+  
 
+  
 
 }

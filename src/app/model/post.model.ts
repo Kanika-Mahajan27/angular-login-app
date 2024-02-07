@@ -4,4 +4,5 @@ export class Post {
     heading! : string;
     content! : string;
     createdAt! : Date;
+    likes : Array<string> = [];
 }

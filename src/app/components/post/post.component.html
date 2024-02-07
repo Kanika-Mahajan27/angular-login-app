@@ -12,6 +12,15 @@
             <div class="col-auto">
                 <i class="bi bi-clock"></i> {{formatDate(post.createdAt)}}
             </div>
+
+            <div class="col-auto">
+                <i class="bi"
+                [ngClass]="{ 'bi-heart': !isPostLiked(post.id), 'bi-heart-fill text-danger': isPostLiked(post.id) }" 
+                (click)="likePost(post.id)" ></i> {{post.likes.length}}
+            </div>
+            <div class="col-auto">
+                <span style="color: blue; cursor: pointer;" (click)="goToPostDetails(post.id)">View Post</span>
+            </div>
         </div>
     </div>
 </div>
