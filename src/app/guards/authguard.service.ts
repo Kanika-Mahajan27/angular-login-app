@@ -13,8 +13,7 @@ export class AuthguardService implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    // Check if the user is authenticated (e.g., if the token exists)
-    if (this.authService.isAuthenticated()) {
+    if (this.authService.getLoggedUser()) {
       return true;
     } else {
       // Redirect to the login page if not authenticated

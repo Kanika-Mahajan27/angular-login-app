@@ -27,6 +27,7 @@ import { DatePipe } from '@angular/common';
 import { LinkedinLoginComponent } from './components/linkedin-login/linkedin-login.component';
 import { FeedComponent } from './components/feed/feed.component';
 import { PostComponent } from './components/post/post.component';
+import { PostDetailsComponent } from './components/post-details/post-details.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PostComponent } from './components/post/post.component';
     ChatboxContainerComponent,
     LinkedinLoginComponent,
     FeedComponent,
-    PostComponent
+    PostComponent,
+    PostDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,7 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ChatboxComponent } from './components/chatbox/chatbox.component';
 import { ChatboxContainerComponent } from './components/chatbox-container/chatbox-container.component';
 import { LinkedinLoginComponent } from './components/linkedin-login/linkedin-login.component';
+import { PostDetailsComponent } from './components/post-details/post-details.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path: 'linkedInLogin',
     component : LinkedinLoginComponent
+  },
+  {
+    path:'post-details/:id',
+    component : PostDetailsComponent
   }
   
 ];
