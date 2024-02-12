@@ -28,6 +28,8 @@ import { LinkedinLoginComponent } from './components/linkedin-login/linkedin-log
 import { FeedComponent } from './components/feed/feed.component';
 import { PostComponent } from './components/post/post.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
+import { CarouselFeedComponent } from './components/carousel-feed/carousel-feed.component';
+import { CreatePostComponent } from './components/create-post/create-post.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { PostDetailsComponent } from './components/post-details/post-details.com
     LinkedinLoginComponent,
     FeedComponent,
     PostComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    CarouselFeedComponent,
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,

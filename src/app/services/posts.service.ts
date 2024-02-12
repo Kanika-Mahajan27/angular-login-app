@@ -33,6 +33,16 @@ export class PostsService {
     
   }
 
+  getPostsOfAuthor(page : number , size : number , author : string){
+    const headers =  new HttpHeaders().set("Authorization",`Bearer ${localStorage.getItem("authToken")}`);
+    return this.httpClient.get<PostPage>(`${this.BASE_URL}?page=${page}&size=${size}&feed=${author}`,{headers});
+  }
+
+  createPost(post: any){
+    const headers =  new HttpHeaders().set("Authorization",`Bearer ${localStorage.getItem("authToken")}`);
+    return this.httpClient.post<Post>(`${this.BASE_URL}`,post,{headers});
+  }
+
   trackLikedPosts(postId:string){
     this.likedPosts.push(postId);
   }
