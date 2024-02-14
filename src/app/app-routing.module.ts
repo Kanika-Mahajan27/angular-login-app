@@ -10,6 +10,9 @@ import { ChatboxComponent } from './components/chatbox/chatbox.component';
 import { ChatboxContainerComponent } from './components/chatbox-container/chatbox-container.component';
 import { LinkedinLoginComponent } from './components/linkedin-login/linkedin-login.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
+import { ProfileSetupComponent } from './components/profile-setup/profile-setup.component';
+import { incompleteProfileGuard } from './guards/incomplete-profile.guard';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -51,6 +54,15 @@ const routes: Routes = [
   {
     path:'post-details/:id',
     component : PostDetailsComponent
+  },
+  {
+    path : 'setup',
+    component : ProfileSetupComponent,
+    canActivate : [incompleteProfileGuard]
+  },
+  {
+    path : "user/:id",
+    component : UserProfileComponent
   }
   
 ];

@@ -59,8 +59,8 @@ export class LoginComponent {
   
   loginUser(){
     this._service.loginUserFromRemote(this.user).subscribe(
-      data => {
-        console.log('Logged User', data);
+      data => {        
+        localStorage.setItem("loggedUser",JSON.stringify(data));
         this.otpRequired=true;
         this.loginSuccess = true;
         

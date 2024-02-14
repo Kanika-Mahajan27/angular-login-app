@@ -1,25 +1,19 @@
 <div class="container mt-4">
-    <div class="card">
-        <div class="card-header">Create new post.</div>
-        <div class="card-body">
+    <div class="row">
+        <div class="col-1 d-flex justify-content-center">
+            <img class=" rounded-circle border border-dark border-3" [src]="'data:image/png;base64'+','+user.image" alt=""
+                height="50" width="50">
+        </div>
+        <div class="col-11">
             <form [formGroup]="postForm" (ngSubmit)="submitPost()">
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Heading</span>
-                    <input type="text" class="form-control" id="heading" formControlName="heading">
-                    <div *ngIf="heading?.invalid && (heading?.dirty || heading?.touched)" class="text-danger">
-                        <div *ngIf="heading?.errors?.['required']">Heading is required.</div>
-                        <div *ngIf="heading?.errors?.['maxlength']">Heading cannot exceed 255 characters.</div>
-                    </div>
-                </div>
-                <div class="input-group mb-3">
-                    <span class="input-group-text">Content</span>
-                    <textarea class="form-control" id="content" formControlName="content" rows="2"></textarea>
-                    <div *ngIf="content?.invalid && (content?.dirty || content?.touched)" class="text-danger">
-                        <div *ngIf="content?.errors?.['required']">Content is required.</div>
-                    </div>
+                <textarea class="form-control mb-3" id="content" formControlName="content" rows="4"
+                    placeholder="Whats on your mind..."></textarea>
+                <div *ngIf="content?.invalid && (content?.dirty || content?.touched)" class="text-danger">
+                    <div *ngIf="content?.errors?.['required']">Content is required.</div>
                 </div>
                 <button type="submit" class="btn btn-dark"><i class="bi bi-newspaper"></i> Create Post</button>
             </form>
         </div>
     </div>
+
 </div>

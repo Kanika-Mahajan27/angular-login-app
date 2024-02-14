@@ -54,14 +54,13 @@ export class OtpComponent {
     console.log(this.otpform);
     this.otpService.verifyOtp(this.userEmail, enteredOtp).subscribe(
       (response) => {
-        console.log("response:" ,response);
-        console.log("response status", response.status);
         if (response) {
           this.verificationSuccess = true;
           localStorage.setItem('authToken', response);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/setup']);
           
         } else {
+          localStorage.removeItem("loggedUser")
           alert('Failed to verify OTP. Please try again.');
         }
       },

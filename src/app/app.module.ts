@@ -30,6 +30,8 @@ import { PostComponent } from './components/post/post.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
 import { CarouselFeedComponent } from './components/carousel-feed/carousel-feed.component';
 import { CreatePostComponent } from './components/create-post/create-post.component';
+import { ProfileSetupComponent } from './components/profile-setup/profile-setup.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,9 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
     PostComponent,
     PostDetailsComponent,
     CarouselFeedComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    ProfileSetupComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

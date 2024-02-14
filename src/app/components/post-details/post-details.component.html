@@ -1,24 +1,27 @@
-<div class="mt-5 mb-3 container d-flex justify-content-center flex-column">
-    <div class="row">
-        <div class="card border-dark">
-            <div class="card-header">
-                Post by {{post.author}}
+<div class="container mt-5 justify-content-center">
+    <div class="card  border-dark  mt-3 mb-3 post">
+        <div class="card-header text-bg-dark">
+            <div class="row">
+                <div class="col-auto">
+                    <a [routerLink]="'/user/'+post.author.id">
+                        <img [src]="'data:image/png;base64'+','+post.author.image" class="img-fluid rounded-circle" alt="avatar"
+                            height="50" width="50">
+                    </a>
+                </div>
+                <div class="col-auto">
+                    <b>
+                        {{post.author.name}}
+                    </b>
+                    <br>
+                    {{formatDate(post.createdAt)}}
+                </div>
+                </div>
+                </div>
+                <div class="card-body">
+            <p class="card-text">{{post.content}}</p>
+            <hr>
+            <i class="bi" [ngClass]="{ 'bi-heart': !isPostLiked(post.id), 'bi-heart-fill text-danger': isPostLiked(post.id) }"
+                (click)="likePost(post.id)"></i> {{post.likes.length}}
             </div>
-            <div class="card-body">
-                <h3 class="card-title">{{post.heading}}</h3>
-                <p class="card-text">{{post.content}}</p>
-                <hr>
-                <p class="card-text"><i class="bi"
-                        [ngClass]="{ 'bi-heart': !isPostLiked(post.id), 'bi-heart-fill text-danger': isPostLiked(post.id) }"
-                                        (click)="likePost(post.id)"></i> {{post.likes.length}}</p>
-                </div>
-                <div class="card-footer text-muted">
-                    <small class="text-muted">{{formatDate(post.createdAt) }}</small>
-                </div>
-                </div>
-                </div>
-                <hr>
-<div class="row">
-    <app-carousel-feed [author]="post.author"></app-carousel-feed>
-</div>
+    </div>
 </div>

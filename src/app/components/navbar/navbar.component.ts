@@ -35,6 +35,8 @@ export class NavbarComponent {
   logout(): void {
     this.leave();
     this.loginService.logoutUser();
+    localStorage.removeItem("loggedUser");
+    localStorage.removeItem("authToken");
   }
 
     @HostListener('window:beforeunload', ['$event'])

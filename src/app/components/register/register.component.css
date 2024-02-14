@@ -1,0 +1,9 @@
+.register-box {
+    max-width: 50%;
+}
+
+@media (max-width : 768px) {
+    .register-box {
+        max-width: 100%;
+    }
+}

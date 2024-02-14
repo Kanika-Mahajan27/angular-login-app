@@ -50,7 +50,11 @@ export class PostComponent  {
   }
 
   isPostLiked(postId: string): boolean {
-    return this.post.likes.includes(this.loginService.loggedUser?.email!);
+    return this.post.likes.includes(this.loginService.getLoggedUser().email!);
+  }
+
+  getImageFromBase64(base64String: string) {
+    return `data:image/png;base64,${base64String}`; 
   }
 
 }

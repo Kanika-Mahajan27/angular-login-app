@@ -64,7 +64,7 @@ export class PostDetailsComponent implements OnInit {
   }
 
   isPostLiked(postId: string): boolean {
-    return this.post.likes.includes(this.loginService.loggedUser?.email!);
+    return this.post.likes.includes(this.loginService.getLoggedUser().email!);
   }
 
 }

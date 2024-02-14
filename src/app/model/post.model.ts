@@ -1,7 +1,8 @@
+import { Author } from "./author.model";
+
 export class Post {
     id! : string;
-    author! :  string;
-    heading! : string;
+    author! :  Author;
     content! : string;
     createdAt! : Date;
     likes : Array<string> = [];

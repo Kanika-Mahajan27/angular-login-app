@@ -1,0 +1,24 @@
+<div class="container mt-3 d-flex-row justify-content-center">
+    <h3><b>Before continuing further you need to complete your profile first by giving us some additional
+            information.</b></h3>
+    <hr>
+    <div class="row">
+        <div class="col-6">
+            <form [formGroup]="profileForm" (ngSubmit)="completeProfile()" class="loginForm">
+                <h3>Email : {{user.email}}</h3>
+                <div class="form-group mt-3">
+                    <div class="input-group mb3">
+                        <span class="input-group-text">Name</span>
+                        <input type="text" title="Your name" placeholder="John Doe" class="form-control" name="password"
+                            formControlName="name" required>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <input class="form-control" (change)="getSelectedFile($event)" type="file" id="file"
+                        accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-dark mt-3">Complete</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,21 +1,29 @@
-<div class="card  border-dark  mt-3 mb-3">
-    <div class="card-header">{{post.heading}}</div>
-    <div class="card-body">
-        <p class="card-text">{{post.content.substring(0,101)}}...<span style="color: blue; cursor: pointer;"
-                (click)="goToPostDetails(post.id)">Read More</span></p>
-        <hr>
-        <i class="bi" [ngClass]="{ 'bi-heart': !isPostLiked(post.id), 'bi-heart-fill text-danger': isPostLiked(post.id) }"
-            (click)="likePost(post.id)"></i> {{post.likes.length}}
-    </div>
-    <div class="card-footer">
-        <div class="row">
-            <div class="col-auto">
-                <i class="bi bi-pen"></i> {{post.author}}
-            </div>
+<div class="container mt-1 justify-content-center">
+    <div class="card  border-dark post">
+        <div class="card-header text-bg-dark">
+            <div class="row">
+                <div class="col-auto">
+                    <a [routerLink]="'/user/'+post.author.id">
+                        <img [src]="getImageFromBase64(post.author.image)" class="img-fluid rounded-circle" alt="avatar" height="50"
+                            width="50">
+                    </a>
+                    </div>
 
-            <div class="col-auto">
-                <i class="bi bi-clock"></i> {{formatDate(post.createdAt)}}
+                <div class="col-auto">
+                    <b>
+                        {{post.author.name}}
+                    </b>
+                    <br>
+                    {{formatDate(post.createdAt)}}
+                    </div>
             </div>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{post.content.substring(0,101)}}...<span style="color: blue; cursor: pointer;"
+                        (click)="goToPostDetails(post.id)">Read More</span></p>
+                <hr>
+                <i class="bi" [ngClass]="{ 'bi-heart': !isPostLiked(post.id), 'bi-heart-fill text-danger': isPostLiked(post.id) }"
+                    (click)="likePost(post.id)"></i> {{post.likes.length}}
         </div>
     </div>
 </div>

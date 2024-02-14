@@ -37,7 +37,7 @@
                     <i class="bi bi-chevron-right"></i></button>
             </div>
             <ul class="navbar-nav">
-                <div *ngIf="otpService.otpVerified == false && loginService.getLoggedUser() == null"
+                <div *ngIf="(otpService.otpVerified == false && loginService.getLoggedUser() == null) && loginService.getLoggedUser().name != null"
                     class="d-flex flex-row">
                     <li class="nav-item p-1">
                         <a routerLink="/home" class="nav-link text-dark">Home</a>
@@ -49,13 +49,16 @@
                         <a class="nav-link text-dark" href="/register">Register</a>
                     </li>
                 </div>
-                <div *ngIf="otpService.otpVerified || loginService.getLoggedUser() != null" class="d-flex flex-row mt-2">
+                <div *ngIf="(otpService.otpVerified || loginService.getLoggedUser() != null) && loginService.getLoggedUser().name != null"
+                    class="d-flex flex-row mt-2">
                     <li class="nav-item p-1">
                         <a routerLink="/home" class="nav-link text-dark">Home</a>
                     </li>
                     <li class="nav-item p-1">
-                        <p class="nav-link text-dark"><i class="bi bi-person-circle"></i> Welcome
-                            {{loginService.getLoggedUser()?.name}}</p>
+                        <a [routerLink]="'/user/'+loginService.getLoggedUser().id">
+                            <p class="nav-link text-dark"><i class="bi bi-person-circle"></i> Welcome
+                                {{loginService.getLoggedUser().name}}</p>
+                                </a>
                     </li>
                 </div>
             </ul>

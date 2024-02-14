@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../model/user';
@@ -14,7 +14,7 @@ export class LoginService {
     
    }
 
-  loggedUser: User | null =null;
+  loggedUser: User | null = null;
   BASE_URL = 'http://localhost:8088';
 
   public loginUserFromRemote(user: User):Observable<any>{
@@ -35,8 +35,8 @@ export class LoginService {
     localStorage.setItem('loggedUser', JSON.stringify(user));
   }
 
-  getLoggedUser() {
-    return this.loggedUser;
+  getLoggedUser() : User {
+    return JSON.parse(localStorage.getItem("loggedUser")!);
   }
   
   isLoggedIn() {
@@ -63,7 +63,19 @@ export class LoginService {
   }
 
   addUser(user: any): Observable<any> {
-    return this._http.post(`${this.BASE_URL}/user/addNewUser`, user);
+    const headers = new HttpHeaders();
+    headers.append("Content-Type","application/json");
+    return this._http.post(`${this.BASE_URL}/user/addNewUser`,user,{headers});
+  }
+
+  updateUser(user:User){
+    const headers =  new HttpHeaders().set("Authorization",`Bearer ${localStorage.getItem("authToken")}`);
+    return this._http.put<User>(`http://localhost:8181/users/profile/${user.id}`,user,{headers});
+  }
+
+  getUserProfile(id : string){
+    const headers =  new HttpHeaders().set("Authorization",`Bearer ${localStorage.getItem("authToken")}`);
+    return this._http.get<User>(`http://localhost:8181/users/profile/${id}`,{headers});
   }
 
   loginWIthGoogle(){
