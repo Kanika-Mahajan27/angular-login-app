@@ -44,7 +44,7 @@ export class NotificationService {
     this.stompClient = Stomp.over(socket);
     const _this = this;
     _this.stompClient.connect({}, function (frame: any) {
-      _this.stompClient.subscribe("/user/"+_this.loginService.loggedUser?.email+"/private", function (sdkEvent) {
+      _this.stompClient.subscribe("/user/"+JSON.parse(localStorage.getItem("loggedUser")!)?.email+"/private", function (sdkEvent) {
           _this.onMessageReceived(sdkEvent);
     });
 
@@ -78,7 +78,7 @@ export class NotificationService {
       // notification.receiver="Kanika Mahajan";
       console.log(notification.receiver);
       notification.content=messageContent;
-      notification.receiver=post.author;
+      notification.receiver=post.author.email;
 
 
       console.log("notification: ", notification);
