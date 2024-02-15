@@ -1,9 +1,10 @@
 <div class="container align-items-center mt-3">
-    <div *ngFor="let post of posts">
+    <div *ngFor="let post of posts"  >
         <div>
-            <app-post [post]="post"></app-post>
-        </div>
-        
-        
+            <app-post [post]="post" (showToastMessageChange)="showToastMessage = $event"></app-post>
+        </div>   
+    </div>
+    <div>
+        <app-notification></app-notification>
     </div>
 </div>

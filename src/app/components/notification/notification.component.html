@@ -1,0 +1,6 @@
+<div *ngIf="showToastMessage">
+    <ngb-toast header="{{ recentNotification?.sender }}" [autohide]="true" (hidden)="showToastMessage=false" id="toast">
+        {{ recentNotification?.content }}
+    </ngb-toast>
+</div>
+

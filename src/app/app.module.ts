@@ -28,6 +28,7 @@ import { LinkedinLoginComponent } from './components/linkedin-login/linkedin-log
 import { FeedComponent } from './components/feed/feed.component';
 import { PostComponent } from './components/post/post.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { PostDetailsComponent } from './components/post-details/post-details.com
     LinkedinLoginComponent,
     FeedComponent,
     PostComponent,
-    PostDetailsComponent
+    PostDetailsComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,

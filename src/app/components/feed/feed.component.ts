@@ -1,7 +1,9 @@
 import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Notification } from 'src/app/model/notification.model';
 import { PostPage } from 'src/app/model/post-page.model';
 import { Post } from 'src/app/model/post.model';
+import { NotificationService } from 'src/app/services/notification.service';
 import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
@@ -15,10 +17,19 @@ export class FeedComponent implements OnInit{
   size : number = 7;
   total : number = 0
   post! : Post;
-  constructor(private postService : PostsService, private router : Router, private cdr: ChangeDetectorRef){}
+  showToastMessage: boolean = false;
+  recentNotification: Notification | null = null;
+
+  constructor(private notificationService: NotificationService, private postService : PostsService, private router : Router, private cdr: ChangeDetectorRef){}
 
   ngOnInit(): void {
     this.loadPosts();
+    this.notificationService.notificationReceived$.subscribe((message) => {
+      if (message) {
+        this.showToastMessage = true;
+        this.recentNotification = message;
+      }
+    });
   }
 
   loadPosts(){
@@ -46,8 +57,15 @@ export class FeedComponent implements OnInit{
     return this.posts.length >= this.total;
   }
 
+  onShowToastMessageChange(showToastMessage: boolean) {
+    this.showToastMessage = showToastMessage;
+    // Handle showToastMessage change here
+  }
   
 
+  showBootstrapToast(notification: Notification):void {
+    
+  }
   
 
 }
