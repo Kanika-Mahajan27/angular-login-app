@@ -44,7 +44,7 @@ export class NotificationService {
     this.stompClient = Stomp.over(socket);
     const _this = this;
     _this.stompClient.connect({}, function (frame: any) {
-      _this.stompClient.subscribe("/user/"+JSON.parse(localStorage.getItem("loggedUser")!)?.email+"/private", function (sdkEvent) {
+      _this.stompClient.subscribe("/user/"+JSON.parse(localStorage.getItem("loggedUser")!)?.id+"/private", function (sdkEvent) {
           _this.onMessageReceived(sdkEvent);
     });
 
