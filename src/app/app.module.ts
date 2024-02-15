@@ -32,6 +32,7 @@ import { CarouselFeedComponent } from './components/carousel-feed/carousel-feed.
 import { CreatePostComponent } from './components/create-post/create-post.component';
 import { ProfileSetupComponent } from './components/profile-setup/profile-setup.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
     FeedComponent,
     PostComponent,
     PostDetailsComponent,
+    NotificationComponent,
     CarouselFeedComponent,
     CreatePostComponent,
     ProfileSetupComponent,

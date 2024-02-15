@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { Notification } from 'src/app/model/notification.model';
 import { Post } from 'src/app/model/post.model';
 import { LoginService } from 'src/app/services/login.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { PostsService } from 'src/app/services/posts.service';
 
 @Component({
@@ -10,12 +12,41 @@ import { PostsService } from 'src/app/services/posts.service';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent  {
+export class PostComponent implements OnInit  {
 
-  constructor(private route: ActivatedRoute, public postsService: PostsService, private loginService : LoginService, private router:Router) { }
+  @Output() showToastMessageChange = new EventEmitter<boolean>();
+  showToastMessage:boolean=false;
+  @Output() recentNotificationChange = new EventEmitter<Notification>();
+  recentNotification :Notification={
+    sender: '',
+    receiver: '',
+    content: '',
+    postId: '',
+    timestamp: null
+  };
+  messageSent:boolean=false;
+  constructor(private route: ActivatedRoute, public postsService: PostsService, private loginService : LoginService, private router:Router, private notificationService: NotificationService) {
+    
+   }
 
   @Input()
   post! : Post;
+
+  ngOnInit(): void {
+    this.notificationService.connect(this.notificationService.username);
+    this.notificationService.notificationReceived$.subscribe((message) => {
+      if (message) {
+        // Show Bootstrap toast here
+        this.showToastMessage=true;
+        this.recentNotification = message;
+        this.showToastMessageChange.emit(true); // Emit event here
+        this.recentNotificationChange.emit(this.recentNotification); 
+      }
+    });
+  }
+  showBootstrapToast(message: Notification):void {
+    
+  }
 
   formatDate(date : Date) {
     const datePipe = new DatePipe("en-US");
@@ -36,12 +67,14 @@ export class PostComponent  {
        this.post.likes = [...this.post.likes];
        this.post={...this.post};
        console.log(this.post.likes);
+
         
       }, error(err) {
         console.error(err);
       }
             
     });
+    
   }
 
   // Method to navigate to post details page
