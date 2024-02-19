@@ -67,3 +67,16 @@ a {
     padding: 15px 0;
     color: #424242
 }
+@media (max-width : 768px) {
+    .profile-container {
+        flex-direction: column;
+    }
+
+    .profile-container .col-3 {
+        width: 100%;
+    }
+
+    .profile-container .col-8 {
+        width: 100%;
+    }
+}
