@@ -17,9 +17,12 @@
                         <div class="col-lg-8 col-md-8 col-12">
                             <h4 class="m-t-0 m-b-0"><strong>{{user.name}}</strong></h4>
                             <p>{{user.email}}</p>
-                            <div>
+                            <div *ngIf="user.email != currentUser.email">
                                 <button class="btn btn-outline-dark btn-round">Follow</button>
                                 <button class="btn btn-dark btn-round btn-simple">Message</button>
+                            </div>
+                            <div *ngIf="user.email === currentUser.email">
+                                <button class="btn btn-dark" (click)="editingProfile = !editingProfile">Edit Profile</button>
                             </div>
                         </div>
                     </div>
@@ -27,8 +30,26 @@
             </div>
             <hr>
         </div>
-        <div class="col-8 scrollable">
+        <div *ngIf="!editingProfile" class="col-8 scrollable">
             <app-feed [feed]="user.email"></app-feed>
+        </div>
+        <div *ngIf="editingProfile" class="col-8 scrollable">
+            <div class="text-end">
+                <h1><i class="bi bi-x-square-fill" (click)="editingProfile = !editingProfile"></i></h1>
+            </div>
+            <form [formGroup]="profileForm" (ngSubmit)="completeProfile()" class="loginForm">
+                <div class="form-group mt-3">
+                    <div class="input-group mb3">
+                        <span class="input-group-text">Name</span>
+                        <input type="text" title="Your name" class="form-control" name="password" formControlName="name"
+                            placeholder="Your name">
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <input class="form-control" (change)="getSelectedFile($event)" type="file" id="file" accept="image/*">
+                </div>
+                <button type="submit" class="btn btn-dark mt-3">Save Changes</button>
+            </form>
         </div>
     </div>
 </div>
