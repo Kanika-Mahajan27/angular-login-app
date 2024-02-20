@@ -22,7 +22,8 @@
                                 <button class="btn btn-dark btn-round btn-simple">Message</button>
                             </div>
                             <div *ngIf="user.email === currentUser.email">
-                                <button class="btn btn-dark" (click)="editingProfile = !editingProfile">Edit Profile</button>
+                                <button class="btn btn-dark" (click)="editingProfile = !editingProfile"><i class="bi bi-pencil-square"></i> Edit
+                                    Profile</button>
                             </div>
                         </div>
                     </div>
@@ -46,9 +47,10 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <input class="form-control" (change)="getSelectedFile($event)" type="file" id="file" accept="image/*">
+                    <input style="display: none;" #fileInput type="file" (change)="getSelectedFile($event)" accept="image/*">
+                    <button class="btn btn-dark" type="button" (click)="fileInput.click()"><i class="bi bi-image"></i> Choose Image</button>
+                    <button type="submit" class="btn btn-dark m-3"><i class="bi bi-floppy"></i> Save Changes</button>
                 </div>
-                <button type="submit" class="btn btn-dark mt-3">Save Changes</button>
             </form>
         </div>
     </div>
