@@ -33,7 +33,7 @@ export class PostComponent implements OnInit  {
   post! : Post;
 
   ngOnInit(): void {
-    this.notificationService.connect(this.notificationService.username);
+    this.notificationService.connect();
     this.notificationService.notificationReceived$.subscribe((message) => {
       if (message) {
         // Show Bootstrap toast here
@@ -56,12 +56,12 @@ export class PostComponent implements OnInit  {
   likePost(postId: string) {
     this.postsService.likePost(postId).subscribe({
       next : (res) =>{
-        const userLikedIndex = this.post.likes.findIndex(email => email === JSON.parse(localStorage.getItem("loggedUser")!)?.email);
+        const userLikedIndex = this.post.likes.findIndex(id => id === JSON.parse(localStorage.getItem("loggedUser")!)?.id);
        if(userLikedIndex != -1){
         this.post.likes.splice(userLikedIndex, 1)
        }
        else{
-        this.post.likes.push(JSON.parse(localStorage.getItem("loggedUser")!)?.email);
+        this.post.likes.push(JSON.parse(localStorage.getItem("loggedUser")!)?.id);
        
        }
        this.post.likes = [...this.post.likes];
@@ -83,7 +83,7 @@ export class PostComponent implements OnInit  {
   }
 
   isPostLiked(postId: string): boolean {
-    return this.post.likes.includes(this.loginService.getLoggedUser().email!);
+    return this.post.likes.includes(this.loginService.getLoggedUser().id!);
   }
 
   getImageFromBase64(base64String: string) {

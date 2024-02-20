@@ -21,21 +21,15 @@ export class NotificationService {
   public receiverUsername!:string;
   post!:any;
 
-  private notificationSubject : BehaviorSubject<Record<string,Array<Notification>>> = new BehaviorSubject<Record<string,Array<Notification>>>({});
-  public notification$ : Observable<Record<string,Array<Notification>>> = this.notificationSubject.asObservable(); 
-
   private notificationReceivedSubject: Subject<Notification | null> = new Subject<Notification | null>();
   // Public observable property for components to subscribe to
   public notificationReceived$: Observable<Notification | null> = this.notificationReceivedSubject.asObservable();
 
-  private receiverSubject : BehaviorSubject<string> =  new BehaviorSubject<string>(this.receiverUsername);
-  public receiver$ : Observable<string> = this.receiverSubject.asObservable();
-
-  constructor(public router:Router, private postService: PostsService, private loginService:LoginService) { }
+  constructor(public router:Router, private loginService:LoginService) { }
 
   webSocketEndPoint: string = 'http://localhost:8084/websocket';
 
-  connect(username: string): void {
+  connect(): void {
     if(this.stompClient && this.stompClient.active){
       return;
     }
@@ -44,7 +38,7 @@ export class NotificationService {
     this.stompClient = Stomp.over(socket);
     const _this = this;
     _this.stompClient.connect({}, function (frame: any) {
-      _this.stompClient.subscribe("/user/"+JSON.parse(localStorage.getItem("loggedUser")!)?.email+"/private", function (sdkEvent) {
+      _this.stompClient.subscribe("/user/"+JSON.parse(localStorage.getItem("loggedUser")!)?.id+"/private", function (sdkEvent) {
           _this.onMessageReceived(sdkEvent);
     });
 
@@ -52,16 +46,12 @@ export class NotificationService {
     }, this.onError);
   }
 
-  changeReceiver(receiver : string){
-    this.receiverUsername = receiver;
-    this.receiverSubject.next(receiver);
-  }
   onMessageReceived = (payload: any): void => {
     const message = JSON.parse(payload.body);
     
-    const existingRecord = this.notificationSubject.value[message.sender + "-"+ message.receiver] || [];
-    const updatedChatRecord = [...existingRecord , message];
-    this.notificationSubject.next({...this.notificationSubject.value,[message.sender + "-" + message.receiver] : updatedChatRecord });
+    // const existingRecord = this.notificationSubject.value || [];
+    // const updatedNotificationRecord = [...existingRecord , message];
+    // this.notificationSubject.next([...this.notificationSubject.value, message]);
     this.notificationReceivedSubject.next(message);
   };
   private onError(error: any): void {
@@ -69,23 +59,4 @@ export class NotificationService {
     // Handle the error
   }
 
-  send(messageContent: string, post:Post): void {
-    if (messageContent && this.stompClient) {
-
-      const notification=new Notification();
- 
-      notification.sender=this.loginService.loggedUser?.name!;
-      // notification.receiver="Kanika Mahajan";
-      console.log(notification.receiver);
-      notification.content=messageContent;
-      notification.receiver=post.author.email;
-
-
-      console.log("notification: ", notification);
-      this.stompClient.send('/app/notification.send', {}, JSON.stringify(notification));
-      const existingRecord = this.notificationSubject.value[notification.receiver + "-" + notification.sender] || [];
-      const updatedChatRecord = [...existingRecord , notification];
-      this.notificationSubject.next({...this.notificationSubject.value,[notification.receiver + "-" + notification.sender] : updatedChatRecord });
-    }
-  }
 }

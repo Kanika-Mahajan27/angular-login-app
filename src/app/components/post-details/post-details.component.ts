@@ -44,12 +44,12 @@ export class PostDetailsComponent implements OnInit {
   likePost(postId: string) {
     this.postsService.likePost(postId).subscribe({
       next : (res) =>{
-        const userLikedIndex = this.post.likes.findIndex(email => email === this.loginService.getLoggedUser()?.email);
+        const userLikedIndex = this.post.likes.findIndex(id => id === this.loginService.getLoggedUser()?.id);
        if(userLikedIndex != -1){
         this.post.likes.splice(userLikedIndex, 1)
        }
        else{
-        this.post.likes.push(this.loginService.loggedUser?.email!);
+        this.post.likes.push(this.loginService.loggedUser?.id!);
        
        }
        this.post.likes = [...this.post.likes];
@@ -64,7 +64,7 @@ export class PostDetailsComponent implements OnInit {
   }
 
   isPostLiked(postId: string): boolean {
-    return this.post.likes.includes(this.loginService.getLoggedUser().email!);
+    return this.post.likes.includes(this.loginService.getLoggedUser().id!);
   }
 
 }

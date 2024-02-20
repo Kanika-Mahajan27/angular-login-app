@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Notification } from 'src/app/model/notification.model';
 import { PostPage } from 'src/app/model/post-page.model';
@@ -12,6 +12,8 @@ import { PostsService } from 'src/app/services/posts.service';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit{
+  @Input()
+  feed : string = "all"
   posts : Array<Post> = [];
   page : number = 1;
   size : number = 7;
@@ -33,7 +35,7 @@ export class FeedComponent implements OnInit{
   }
 
   loadPosts(){
-    this.postService.getPosts(this.page,this.size).subscribe({
+    this.postService.getPosts(this.page,this.size,this.feed).subscribe({
       next : (res : PostPage) => { 
         this.posts.push(...res.posts);
         this.total = res.total;
@@ -55,16 +57,6 @@ export class FeedComponent implements OnInit{
 
   get last(): boolean {
     return this.posts.length >= this.total;
-  }
-
-  onShowToastMessageChange(showToastMessage: boolean) {
-    this.showToastMessage = showToastMessage;
-    // Handle showToastMessage change here
-  }
-  
-
-  showBootstrapToast(notification: Notification):void {
-    
   }
   
 

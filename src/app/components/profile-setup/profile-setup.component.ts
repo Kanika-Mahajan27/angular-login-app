@@ -37,6 +37,10 @@ export class ProfileSetupComponent {
             next : (res)=> {
               localStorage.setItem("loggedUser",JSON.stringify(res));
               this.router.navigate(["/home"]);
+            },
+            error  : (err) => {
+              console.error(err);
+              
             }
           })
         });
@@ -49,6 +53,9 @@ export class ProfileSetupComponent {
                   next : (res)=> {
                     localStorage.setItem("loggedUser",JSON.stringify(res)); 
                     this.router.navigate(["/home"]);
+                  },
+                  error  : (err) => {
+                    console.error(err);
                   }
                 })
               });
@@ -81,14 +88,12 @@ async getImageFromBase64() {
     throw error;
   }
 }
-// Inside your component class
 async loadImage() {
   try {
     const imageUrl = await this.getImageFromBase64();
     this.imageSrc = imageUrl;
   } catch (error) {
     console.error('Error loading image:', error);
-    // Handle error
   }
 }
 

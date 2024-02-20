@@ -13,9 +13,9 @@ export class PostsService {
   totalLikes! : number;
   constructor(private httpClient : HttpClient) { }
 
-  getPosts(page : number , size : number){
+  getPosts(page : number , size : number,feed : string){
     const headers =  new HttpHeaders().set("Authorization",`Bearer ${localStorage.getItem("authToken")}`);
-    return this.httpClient.get<PostPage>(`${this.BASE_URL}?page=${page}&size=${size}&feed=all`,{headers});
+    return this.httpClient.get<PostPage>(`${this.BASE_URL}?page=${page}&size=${size}&feed=${feed}`,{headers});
   }
 
   getPostDetails(postId: string):Observable<Post>{
