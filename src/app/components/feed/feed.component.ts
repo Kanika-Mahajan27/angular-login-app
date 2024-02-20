@@ -56,16 +56,6 @@ export class FeedComponent implements OnInit{
   get last(): boolean {
     return this.posts.length >= this.total;
   }
-
-  onShowToastMessageChange(showToastMessage: boolean) {
-    this.showToastMessage = showToastMessage;
-    // Handle showToastMessage change here
-  }
-  
-
-  showBootstrapToast(notification: Notification):void {
-    
-  }
   
 
 }

@@ -11,7 +11,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class NotificationComponent implements OnInit {
 
   showToastMessage: boolean = false;
-  recentNotification: Notification | null = null;
+  recentNotification!: Notification ;
 
   constructor(private notificationService: NotificationService){}
 
@@ -29,11 +29,6 @@ export class NotificationComponent implements OnInit {
 
   onToastHidden() {
     this.showToastMessage = false;
-  }
-
-  onShowToastMessageChange(showToastMessage: boolean) {
-    this.showToastMessage = showToastMessage;
-    // Handle showToastMessage change here
   }
 
 }

@@ -33,7 +33,7 @@ export class PostComponent implements OnInit  {
   post! : Post;
 
   ngOnInit(): void {
-    this.notificationService.connect(this.notificationService.username);
+    this.notificationService.connect();
     this.notificationService.notificationReceived$.subscribe((message) => {
       if (message) {
         // Show Bootstrap toast here
