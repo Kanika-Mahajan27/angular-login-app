@@ -19,7 +19,7 @@
                             <p>{{user.email}}</p>
                             <div *ngIf="user.email != currentUser.email">
                                 <button class="btn btn-outline-dark btn-round">Follow</button>
-                                <button class="btn btn-dark btn-round btn-simple">Message</button>
+                                <button class="btn btn-dark btn-round btn-simple" (click)="chatWith()">Message</button>
                             </div>
                             <div *ngIf="user.email === currentUser.email">
                                 <button class="btn btn-dark" (click)="editingProfile = !editingProfile"><i class="bi bi-pencil-square"></i> Edit
@@ -31,7 +31,7 @@
             </div>
             <hr>
         </div>
-        <div *ngIf="!editingProfile" class="col-8 scrollable">
+        <div *ngIf="!editingProfile" class="col-8">
             <app-feed [feed]="user.email"></app-feed>
         </div>
         <div *ngIf="editingProfile" class="col-8 scrollable">

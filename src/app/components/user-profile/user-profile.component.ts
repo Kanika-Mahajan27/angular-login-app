@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/model/user';
 import { LoginService } from 'src/app/services/login.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { FeedComponent } from '../feed/feed.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AvatarService } from 'src/app/services/avatar.service';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,7 +19,7 @@ export class UserProfileComponent implements OnInit{
   editingProfile : boolean = false;
   profileForm: FormGroup<any>;
   selectedFile! : File;
-  constructor(private route:ActivatedRoute, private loginService:LoginService,private fb : FormBuilder,private avatarService : AvatarService){
+  constructor(private route:ActivatedRoute, private loginService:LoginService,private fb : FormBuilder,private avatarService : AvatarService,private webSocketService : WebSocketService,private router: Router){
     this.profileForm = fb.group({
       name : [''],
     })
@@ -54,6 +55,11 @@ export class UserProfileComponent implements OnInit{
     if (inputElement.files && inputElement.files.length > 0) {
       this.selectedFile = inputElement.files[0];
     }
+  }
+
+  chatWith(){
+    this.webSocketService.changeReceiver(this.user.name);
+    this.router.navigate(['/chatbox']);
   }
 
   completeProfile(){
@@ -96,6 +102,7 @@ export class UserProfileComponent implements OnInit{
       }
     window.alert("Profile Updated Sucessfully!");
     this.editingProfile =  !this.editingProfile;
+    this.feedComponent.refreshFeed();
   }
 
   encodeImageBase64(file: File): Promise<string> {

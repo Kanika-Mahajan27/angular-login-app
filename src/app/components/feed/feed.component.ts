@@ -66,8 +66,9 @@ export class FeedComponent implements OnInit{
     // Handle showToastMessage change here
   }
   
-
-  showBootstrapToast(notification: Notification):void {
-    
+  public refreshFeed(){
+    this.posts = [];
+    this.loadingPost = false;
+    this.loadPosts();
   }
 }
