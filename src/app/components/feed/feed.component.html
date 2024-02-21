@@ -1,4 +1,12 @@
 <div class="container align-items-center mt-3 scrollable" #scrollableDiv>
+    <div *ngIf="loadingPost">
+        <div class="text-center">
+            <div class="spinner-border text-dark" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3>Loading latest posts...</h3>
+        </div>
+    </div>
     <div *ngFor="let post of posts"  >
         <div>
             <app-post [post]="post" (showToastMessageChange)="showToastMessage = $event"></app-post>
