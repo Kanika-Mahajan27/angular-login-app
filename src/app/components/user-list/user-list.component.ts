@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserInfo } from 'src/app/model/userInfo.model';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
@@ -8,33 +9,35 @@ import { WebSocketService } from 'src/app/services/web-socket.service';
 })
 export class UserListComponent implements OnInit{
   
-  users : Record<string,string> = {};
+  users : Array<UserInfo> = [];
 
   constructor(private webSocketService : WebSocketService){}
 
   ngOnInit(): void {
     this.webSocketService.userList$.subscribe((user)=>{
-      this.users = {...user};
+      this.users=[];
+      this.users = [...user];
     })
   }
 
-  changeReceiver(receiver : string){
+  changeReceiver(receiver : UserInfo){
     this.webSocketService.changeReceiver(receiver);
   }
 
-  isCurrentUser(user:string){
-    return this.webSocketService.username === user;
+  isCurrentUser(user:UserInfo){
+    return this.webSocketService.userid === user.id;
   }
 
-  isCurrentReceiver(user : string){
-    return this.webSocketService.receiverUsername === user;
+  //CHANGE HERE TO ID
+  isCurrentReceiver(user : UserInfo){
+    return this.webSocketService.receiverUsername === user.name;
   }
 
   get userStatuses() {
     return Object.entries(this.users).map(([key, value]) => ({ key, value }));
   }
 
-  isUserActive(user : string){
-    return this.users[user] == "Active";
+  isUserActive(user : UserInfo){
+    return user.status == "Active";
   }
 }

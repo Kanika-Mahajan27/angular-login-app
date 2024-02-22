@@ -2,8 +2,10 @@ import { DatePipe } from "@angular/common";
 
 export class Message {
     public  content!:string ;
-    public  sender!:string; //username
-    public  receiver!:string; // reciever_username
+    public  senderName !:string; //username
+    public  senderId!:string;
+    public  receiverName !:string; // reciever_username
+    public  receiverId !:string;
     public  group:string = ""; // empty
     public  isGroupChat!:boolean; //false
     public  type!:string; 

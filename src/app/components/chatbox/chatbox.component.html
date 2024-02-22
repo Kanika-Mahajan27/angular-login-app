@@ -33,12 +33,16 @@
         </form> -->
     </div>
 
-    <div *ngIf="showToastMessage">
+    <!-- <div *ngIf="showToastMessage">
         <ngb-toast header="{{recentMessage.sender}}" [autohide]="true" (hidden)="showToastMessage = false" id="toast">
             {{recentMessage.content}}
         </ngb-toast>
 
+    </div> -->
+    <div>
+        <app-notification></app-notification>
     </div>
+    
 
 </div>
 </div>

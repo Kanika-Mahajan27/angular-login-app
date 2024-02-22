@@ -16,7 +16,7 @@ export class FeedComponent implements OnInit{
   feed : string = "all"
   posts : Array<Post> = [];
   page : number = 1;
-  size : number = 7;
+  size : number = 30;
   total : number = 0
   post! : Post;
   showToastMessage: boolean = false;
