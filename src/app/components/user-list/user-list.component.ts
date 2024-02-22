@@ -24,7 +24,7 @@ export class UserListComponent implements OnInit{
     this.webSocketService.changeReceiver(receiver);
   }
 
-  isCurrentUser(user:UserInfo){
+  isCurrentUser(user:UserInfo){    
     return this.webSocketService.userid === user.id;
   }
 

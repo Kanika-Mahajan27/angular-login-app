@@ -20,7 +20,7 @@ export class NavbarComponent {
       const username=this.loginService.loggedUser?.name;
       const userid=this.loginService.loggedUser?.id;
       this.websocketService.username=username!;
-      this.websocketService.join(username!, userid!);
+      this.websocketService.join();
       this.router.navigate(['/chatbox'])
     
   }

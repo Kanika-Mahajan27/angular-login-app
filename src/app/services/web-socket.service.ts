@@ -49,22 +49,22 @@ export class WebSocketService implements OnDestroy{
     this.receiverSubject.next(receiver.name);
   }
 
-  join(username : string, userid : string) : void {
+  join() : void {
+    this.userid=this.loginService.getLoggedUser().id;
+    this.username = this.loginService.getLoggedUser().name;
     const socket =  new SockJS(this.webSocketEndPoint);
     this.joinStompClient = Stomp.over(socket);
     const _this = this;
-    _this.joinStompClient.connect({'Authorization': `Bearer ${localStorage.getItem("authToken")}`},function (frame : any){
+    _this.joinStompClient.connect({},function (frame : any){
       _this.joinStompClient.subscribe("/topic/join",function (event){
         _this.onUserJoin(event);
       });
     const connectMessage = new StatusMessage();
     connectMessage.senderId = _this.loginService.getLoggedUser().id;
     connectMessage.senderName=_this.loginService.getLoggedUser().name;
-    const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("authToken")}`);
-    console.log(headers);
     _this.joinStompClient.send(
       '/app/chat.join',
-      {'Authorization': `Bearer ${localStorage.getItem("authToken")}`},
+      {},
       JSON.stringify(connectMessage)
     );
     });
@@ -73,8 +73,6 @@ export class WebSocketService implements OnDestroy{
   }
 
   connect(): void {
-    this.userid=this.loginService.getLoggedUser().id;
-    this.username = this.loginService.getLoggedUser().name;
     console.log(this.userid, this.username);
     if(this.stompClient && this.stompClient.active){
       return;
@@ -120,15 +118,7 @@ export class WebSocketService implements OnDestroy{
 
   onUserJoin( payload : any ) : void{
     const message : StatusMessage = JSON.parse(payload.body)
-    const users: Record<string, Array<string>> = {};
-    
-    // Update the existing user data with the new user information
-
       this.user.next([...message.users]);
-
-      // this.user.next(users);
-      console.log(this.user);
-      console.log(message.history);
       this.chatSubject.next({...this.chatSubject.value,...this.getUserChatHistory(message.history)})
   }
 
@@ -136,7 +126,7 @@ export class WebSocketService implements OnDestroy{
   let chatHistory :  Record<string,Array<Message>> = {};
   for (const key in messages){
     if(messages.hasOwnProperty(key)){
-      chatHistory[key + '-' + this.username] = messages[key];
+      chatHistory[key + '-' + this.userid] = messages[key];
     }
   }
   return chatHistory;
@@ -159,22 +149,18 @@ export class WebSocketService implements OnDestroy{
       console.log("chatMessage: ", chatMessage);
       this.stompClient.send('/app/chat.send', {}, JSON.stringify(chatMessage));
       this.messageSubject.next([...this.messageSubject.value, chatMessage]);
-      const existingRecord = this.chatSubject.value[chatMessage.receiverName + "-" + chatMessage.senderName] || [];
+      const existingRecord = this.chatSubject.value[chatMessage.receiverId + "-" + chatMessage.senderId] || [];
     const updatedChatRecord = [...existingRecord , chatMessage];
-    this.chatSubject.next({...this.chatSubject.value,[chatMessage.receiverName + "-" + chatMessage.senderName] : updatedChatRecord });
+    this.chatSubject.next({...this.chatSubject.value,[chatMessage.receiverId + "-" + chatMessage.senderId] : updatedChatRecord });
     }
   }
 
-
   onMessageReceived = (payload: any): void => {
-    const message = JSON.parse(payload.body);
-    // if(message.type === "JOIN"){
-    //   this.user.next([...this.user.value,message.sender]);
-    // }
+    const message : Message = JSON.parse(payload.body);
     console.log(message);
-    const existingRecord = this.chatSubject.value[message.sender + "-"+ message.receiver] || [];
+    const existingRecord = this.chatSubject.value[message.senderId + "-"+ message.receiverId] || [];
     const updatedChatRecord = [...existingRecord , message];
-    this.chatSubject.next({...this.chatSubject.value,[message.sender + "-" + message.receiver] : updatedChatRecord });
+    this.chatSubject.next({...this.chatSubject.value,[message.senderId + "-" + message.receiverId] : updatedChatRecord });
     this.messageSubject.next([...this.messageSubject.value, message]);
     this.messageReceivedSubject.next(message);
     
