@@ -36,7 +36,7 @@ export class PostComponent implements OnInit  {
   @Output() deletePostEvent = new EventEmitter<string>();
 
   ngOnInit(): void {
-    this.notificationService.connect(this.notificationService.username);
+    this.notificationService.connect();
     this.notificationService.notificationReceived$.subscribe((message) => {
       if (message) {
         // Show Bootstrap toast here

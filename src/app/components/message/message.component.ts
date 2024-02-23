@@ -19,16 +19,15 @@ export class MessageComponent implements OnDestroy {
   constructor(private webSocketService: WebSocketService , private datePipe :  DatePipe) {
     this.chatSubscription = this.webSocketService.chats$.subscribe((chats: Record<string,Array<Message>>)  => {
       this.chats =  chats;
-      this.messageArray = chats[this.webSocketService.receiverUsername + "-" + this.webSocketService.username];
-      console.log("From message component",this.messageArray);
+      this.messageArray = chats[this.webSocketService.receiverUserid + "-" + this.webSocketService.userid];
     });
     this.webSocketService.receiver$.subscribe(receiver => {
-      this.messageArray = this.chats[receiver + "-" + this.webSocketService.username];
+      this.messageArray = this.chats[this.webSocketService.receiverUserid + "-" + this.webSocketService.userid];
     })
   }
 
   checkSender(message:Message):boolean{
-    return this.webSocketService.username===message.sender;
+    return this.webSocketService.userid===message.senderId;
   }
 
   ngOnDestroy(): void {

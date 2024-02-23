@@ -12,7 +12,6 @@ import { PostsService } from 'src/app/services/posts.service';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit{
-
   @Input()
   feed : string = "all"
   posts : Array<Post> = [];
@@ -60,7 +59,6 @@ export class FeedComponent implements OnInit{
         this.loadPosts();
       }
   }
-
 
   onShowToastMessageChange(showToastMessage: boolean) {
     this.showToastMessage = showToastMessage;

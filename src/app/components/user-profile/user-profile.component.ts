@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+
 import { ActivatedRoute, Router } from '@angular/router';
+
 import { User } from 'src/app/model/user';
 import { LoginService } from 'src/app/services/login.service';
 import { PostsService } from 'src/app/services/posts.service';
@@ -7,6 +9,7 @@ import { FeedComponent } from '../feed/feed.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AvatarService } from 'src/app/services/avatar.service';
 import { WebSocketService } from 'src/app/services/web-socket.service';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -16,6 +19,7 @@ import { WebSocketService } from 'src/app/services/web-socket.service';
 export class UserProfileComponent implements OnInit{
 
   user! : User;
+
   editingProfile : boolean = false;
   profileForm: FormGroup<any>;
   selectedFile! : File;
@@ -44,6 +48,7 @@ export class UserProfileComponent implements OnInit{
       }
     })
   }
+
 
   
   public get currentUser() : User {
@@ -118,6 +123,7 @@ export class UserProfileComponent implements OnInit{
     };
     reader.onerror = error => reject(error);
   });
+
 }
 }
 

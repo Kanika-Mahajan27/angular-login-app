@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 import { MessageComponent } from '../message/message.component';
 import { Message } from '../../model/message.model';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-chatbox',
@@ -21,7 +22,7 @@ export class ChatboxComponent implements OnInit {
   showToastMessage:boolean=false;
   recentMessage!:Message;
   
-  constructor(private router:Router, public webSocketService:WebSocketService, private formBuilder:FormBuilder){
+  constructor( public webSocketService:WebSocketService, private formBuilder:FormBuilder, private notificationService: NotificationService){
     this.username=webSocketService.username;
     this.messageForm = this.formBuilder.group({
       message: ['', Validators.required]
@@ -36,41 +37,23 @@ export class ChatboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.webSocketService.connect(this.webSocketService.username);
+    this.notificationService.connect();
+    this.webSocketService.connect();
     this.webSocketService.messageReceived$.subscribe((message) => {
       if (message) {
-        // Show Bootstrap toast here
-        this.showToastMessage=true;
-        this.recentMessage = message;
+          this.recentMessage = message;
       }
     });
-  }
-  showBootstrapToast(message: Message):void {
-    
   }
 
   send(messageContent: string): void {
     
     if (messageContent && this.webSocketService.stompClient) {
-      
-      console.log("array length:",this.messageArrayLength);
+
       this.webSocketService.send(messageContent);
       this.messageSent=true;
       this.messageForm.get('message')?.setValue('');
     }
   }  
-
-  // sendPrivate(): void{
-
-
-  //   if(this.receiverForm.valid){
-  //     this.webSocketService.receiverUsername=this.receiverForm.value.receiver;
-  //     this.webSocketService.connect(this.webSocketService.username);
-  //     this.showChatBox=true;
-  //     // this.webSocketService.sendPrivate(receiver);
-      
-  //   }
-  // }
-
 
 }

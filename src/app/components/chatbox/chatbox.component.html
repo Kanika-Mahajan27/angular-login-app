@@ -18,27 +18,12 @@
                     </div>
                 </div>
             </form>
-        <!-- </div> -->
-
-
-        <!-- <form (ngSubmit)="sendPrivate()" [formGroup]="receiverForm" id="receiverForm" name="receiverForm"
-            nameForm="receiverForm">
-            <div class="form-group">
-                <div class="input clearfix">
-                    <input type="text" id="receiver" placeholder="Send message to:" autocomplete="off"
-                        class="form-control" formControlName="receiver" />
-                    <button type="submit" class="primary">Chat</button>
-                </div>
-            </div>
-        </form> -->
     </div>
 
-    <div *ngIf="showToastMessage">
-        <ngb-toast header="{{recentMessage.sender}}" [autohide]="true" (hidden)="showToastMessage = false" id="toast">
-            {{recentMessage.content}}
-        </ngb-toast>
-
+    <div>
+        <app-notification></app-notification>
     </div>
+    
 
 </div>
 </div>
