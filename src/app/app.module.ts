@@ -33,6 +33,8 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
 import { ProfileSetupComponent } from './components/profile-setup/profile-setup.component';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { BackComponent } from './components/back/back.component';
+import { ActivatedRouteSnapshot } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,8 @@ import { NotificationComponent } from './components/notification/notification.co
     CarouselFeedComponent,
     CreatePostComponent,
     ProfileSetupComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    BackComponent
   ],
   imports: [
     BrowserModule,

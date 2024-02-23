@@ -1,8 +1,16 @@
-<div class="container align-items-center mt-3">
-    <div *ngFor="let post of posts"  >
+<div class="container align-items-center mt-3 scrollable" #scrollableDiv>
+    <div *ngFor="let post of posts">
         <div>
-            <app-post [post]="post" (showToastMessageChange)="showToastMessage = $event"></app-post>
-        </div>   
+            <app-post [post]="post" (showToastMessageChange)="showToastMessage = $event" (deletePostEvent)="deletePost($event)"></app-post>
+        </div>
+    </div>
+    <div *ngIf="loadingPost">
+        <div class="text-center">
+            <div class="spinner-border text-dark" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <h3>Loading posts...</h3>
+        </div>
     </div>
     <div>
         <app-notification></app-notification>

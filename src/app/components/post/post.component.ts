@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Notification } from 'src/app/model/notification.model';
 import { Post } from 'src/app/model/post.model';
+import { User } from 'src/app/model/user';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PostsService } from 'src/app/services/posts.service';
@@ -25,12 +26,14 @@ export class PostComponent implements OnInit  {
     timestamp: null
   };
   messageSent:boolean=false;
-  constructor(private route: ActivatedRoute, public postsService: PostsService, private loginService : LoginService, private router:Router, private notificationService: NotificationService) {
+  constructor(public postsService: PostsService, private loginService : LoginService, private router:Router, private notificationService: NotificationService) {
     
    }
 
   @Input()
   post! : Post;
+
+  @Output() deletePostEvent = new EventEmitter<string>();
 
   ngOnInit(): void {
     this.notificationService.connect(this.notificationService.username);
@@ -89,5 +92,15 @@ export class PostComponent implements OnInit  {
   getImageFromBase64(base64String: string) {
     return `data:image/png;base64,${base64String}`; 
   }
+
+  
+  public get loggedUser() : User {
+    return this.loginService.getLoggedUser();
+  }
+
+  deletePost(){
+    this.deletePostEvent.emit(this.post.id);
+  }
+  
 
 }

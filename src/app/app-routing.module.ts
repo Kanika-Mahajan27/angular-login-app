@@ -13,17 +13,21 @@ import { PostDetailsComponent } from './components/post-details/post-details.com
 import { ProfileSetupComponent } from './components/profile-setup/profile-setup.component';
 import { incompleteProfileGuard } from './guards/incomplete-profile.guard';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { backGuard } from './guards/back.guard';
 
 const routes: Routes = [
   {
     path:'',
     component:LoginComponent,
-    pathMatch:'full'
+    pathMatch:'full',
+    canActivate : [backGuard]
   },
   {
     path:"login",
     component:LoginComponent,
-    pathMatch:'full'
+    pathMatch:'full',
+    canActivate : [backGuard]
+
   },
   {
     path:"otp",
@@ -37,7 +41,9 @@ const routes: Routes = [
   },
   {
     path:"register",
-    component:RegisterComponent
+    component:RegisterComponent,
+    canActivate : [backGuard]
+
   },
   {
     path:"welcome",

@@ -5,7 +5,7 @@
                 <a class="navbar-brand text-dark text-center" href="#"><i class="bi bi-person-badge"></i> Profile</a>
             </div>
         </nav>
-    <div class=" row">
+    <div class="row profile-container">
         <div class="col-3">
             <div class="card profile-header border border-end">
                 <div class="body">
@@ -17,9 +17,14 @@
                         <div class="col-lg-8 col-md-8 col-12">
                             <h4 class="m-t-0 m-b-0"><strong>{{user.name}}</strong></h4>
                             <p>{{user.email}}</p>
-                            <div>
-                                <button class="btn btn-outline-dark btn-round">Follow</button>
-                                <button class="btn btn-dark btn-round btn-simple">Message</button>
+                            <div *ngIf="user.email != currentUser.email">
+                                <button class="btn btn-outline-info btn-round">Follow</button>
+                                <button class="btn text-dark bg-info-subtle" (click)="chatWith()">Message</button>
+                            </div>
+                            <div *ngIf="user.email === currentUser.email">
+                                <button class="btn text-dark bg-info-subtle" (click)="editingProfile = !editingProfile"><i
+                                        class="bi bi-pencil-square"></i> Edit
+                                    Profile</button>
                             </div>
                         </div>
                     </div>
@@ -27,8 +32,28 @@
             </div>
             <hr>
         </div>
-        <div class="col-8 scrollable">
+        <div *ngIf="!editingProfile" class="col-8">
             <app-feed [feed]="user.email"></app-feed>
+        </div>
+        <div *ngIf="editingProfile" class="col-8 scrollable">
+            <div class="text-end">
+                <h1><i class="bi bi-x-square-fill" (click)="editingProfile = !editingProfile"></i></h1>
+            </div>
+            <form [formGroup]="profileForm" (ngSubmit)="completeProfile()" class="loginForm">
+                <div class="form-group mt-3">
+                    <div class="input-group mb3">
+                        <span class="input-group-text">Name</span>
+                        <input type="text" title="Your name" class="form-control" name="password" formControlName="name"
+                            placeholder="Your name">
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <input style="display: none;" #fileInput type="file" (change)="getSelectedFile($event)" accept="image/*">
+                    <button class="btn text-dark bg-info-subtle" type="button" (click)="fileInput.click()"><i class="bi bi-image"></i>
+                        Choose Image</button>
+                    <button type="submit" class="btn text-dark bg-info-subtle m-3"><i class="bi bi-floppy"></i> Save Changes</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

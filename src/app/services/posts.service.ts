@@ -46,4 +46,9 @@ export class PostsService {
   trackLikedPosts(postId:string){
     this.likedPosts.push(postId);
   }
+  
+  deletePost(postId : string){
+    const headers =  new HttpHeaders().set("Authorization",`Bearer ${localStorage.getItem("authToken")}`);
+    return this.httpClient.delete(`${this.BASE_URL}/${postId}`,{headers});
+  }
 }

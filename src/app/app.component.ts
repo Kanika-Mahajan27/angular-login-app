@@ -9,7 +9,4 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'loginapp';
   constructor(){}
-  goBack(){
-    window.history.back();
-  }
 }
