@@ -16,9 +16,11 @@ export class FeedComponent implements OnInit{
   feed : string = "all"
   posts : Array<Post> = [];
   page : number = 1;
-  size : number = 30;
+  size : number = 7;
+  last : boolean = false;
   total : number = 0
   post! : Post;
+  loadingPost : boolean =  false;
   showToastMessage: boolean = false;
   recentNotification: Notification | null = null;
 
@@ -35,29 +37,50 @@ export class FeedComponent implements OnInit{
   }
 
   loadPosts(){
+    this.loadingPost = true;
     this.postService.getPosts(this.page,this.size,this.feed).subscribe({
       next : (res : PostPage) => { 
         this.posts.push(...res.posts);
         this.total = res.total;
         this.page++;
+        this.last = res.last;
       },
       error(err) {
           console.error(err);
       },
+      complete : ()=>{
+        this.loadingPost = false;
+      }
     })
   }
   @HostListener('window:scroll', ['$event'])
   onScroll() {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      if (!this.last) {
+      if (this.last == false && this.loadingPost == false) {
         this.loadPosts();
       }
-    }
   }
 
-  get last(): boolean {
-    return this.posts.length >= this.total;
+  onShowToastMessageChange(showToastMessage: boolean) {
+    this.showToastMessage = showToastMessage;
+    // Handle showToastMessage change here
   }
   
+  public refreshFeed(){
+    this.posts = [];
+    this.loadingPost = false;
+    this.loadPosts();
+  }
 
+  deletePost(data: string) {
+    this.postService.deletePost(data).subscribe({
+      next : (res) => {
+        const updatedPosts = this.posts.filter(post => post.id !== data);
+        this.posts = [...updatedPosts];
+      },
+      error : (err) => {
+        console.error("Could Not Delete Post");
+        
+      }
+    })
+  }
 }
