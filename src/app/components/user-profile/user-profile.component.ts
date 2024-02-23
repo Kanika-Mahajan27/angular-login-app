@@ -9,6 +9,7 @@ import { FeedComponent } from '../feed/feed.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AvatarService } from 'src/app/services/avatar.service';
 import { WebSocketService } from 'src/app/services/web-socket.service';
+import { UserInfo } from 'src/app/model/userInfo.model';
 
 
 @Component({
@@ -63,7 +64,12 @@ export class UserProfileComponent implements OnInit{
   }
 
   chatWith(){
-    this.webSocketService.changeReceiver(this.user.name);
+    const reciever =  new UserInfo();
+    reciever.id = this.user.id;
+    reciever.name = this.user.name
+    this.webSocketService.userid = this.loginService.getLoggedUser().id;
+    this.webSocketService.username = this.loginService.getLoggedUser().name;
+    this.webSocketService.changeReceiver(reciever);
     this.router.navigate(['/chatbox']);
   }
 
