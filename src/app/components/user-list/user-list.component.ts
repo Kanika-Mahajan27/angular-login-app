@@ -32,10 +32,6 @@ export class UserListComponent implements OnInit{
     return this.webSocketService.receiverUserid === user.id;
   }
 
-  get userStatuses() {
-    return Object.entries(this.users).map(([key, value]) => ({ key, value }));
-  }
-
   isUserActive(user : UserInfo){
     return user.status == "Active";
   }
