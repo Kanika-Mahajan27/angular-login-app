@@ -20,14 +20,9 @@ export class MessageComponent implements OnDestroy {
     this.chatSubscription = this.webSocketService.chats$.subscribe((chats: Record<string,Array<Message>>)  => {
       this.chats =  chats;
       this.messageArray = chats[this.webSocketService.receiverUserid + "-" + this.webSocketService.userid];
-      console.log(chats);
-      console.log("From message component",this.messageArray);
     });
     this.webSocketService.receiver$.subscribe(receiver => {
-      console.log(receiver)
-      console.log(this.chats);
       this.messageArray = this.chats[this.webSocketService.receiverUserid + "-" + this.webSocketService.userid];
-      console.log(this.messageArray);
     })
   }
 

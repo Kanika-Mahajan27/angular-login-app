@@ -6,8 +6,6 @@ import { Message } from '../model/message.model';
 import { Router } from '@angular/router';
 import { StatusMessage } from '../model/status-message.model';
 import { LoginService } from './login.service';
-import { User } from '../model/user';
-import { HttpHeaders } from '@angular/common/http';
 import { UserInfo } from '../model/userInfo.model';
 @Injectable({
   providedIn: 'root'
@@ -33,12 +31,8 @@ export class WebSocketService implements OnDestroy{
   private messageSubject: BehaviorSubject<Array<Message>> = new BehaviorSubject<Array<Message>>([]);
   private user : BehaviorSubject<Array<UserInfo>> = new BehaviorSubject<Array<UserInfo>>([]);
   public userList$ : Observable<Array<UserInfo>> = this.user.asObservable();
-  // Public observable property for components to subscribe to
   public messageArray$: Observable<Array<Message>> = this.messageSubject.asObservable();
-
   private messageReceivedSubject: Subject<Message | null> = new Subject<Message | null>();
-
-  // Public observable property for components to subscribe to
   public messageReceived$: Observable<Message | null> = this.messageReceivedSubject.asObservable();
 
   constructor(public router:Router, private loginService:LoginService) { }
@@ -78,7 +72,6 @@ export class WebSocketService implements OnDestroy{
       return;
     }
     const socket = new SockJS(this.webSocketEndPoint);
-    // let socket=io(this.webSocketEndPoint);
     this.stompClient = Stomp.over(socket);
     const _this = this;
     console.log(_this.userid);
@@ -87,49 +80,40 @@ export class WebSocketService implements OnDestroy{
           _this.onMessageReceived(sdkEvent);
     });
 
-
-      // Add a system message when a user joins
-      
-      const systemMessage=new Message();
-      systemMessage.senderName=_this.username;
-      systemMessage.senderId=_this.userid;
-      systemMessage.content=`${_this.username} joined the chat` ;
-      systemMessage.type='JOIN';
-      // systemMessage.group=""
-      systemMessage.isGroupChat=false;
-      systemMessage.receiverId=
-      systemMessage.receiverName=_this.receiverUsername;
-      // _this.messageSubject.next([..._this.messageSubject.value, systemMessage]);
-      _this.stompClient.send(
-        '/app/chat.register',
-        {},
-        JSON.stringify(systemMessage)
-      );
-      //_this.stompClient.reconnect_delay = 2000;
+    const systemMessage=new Message();
+    systemMessage.senderName=_this.username;
+    systemMessage.senderId=_this.userid;
+    systemMessage.content=`${_this.username} joined the chat` ;
+    systemMessage.type='JOIN';
+    systemMessage.isGroupChat=false;
+    systemMessage.receiverId=
+    systemMessage.receiverName=_this.receiverUsername;
+    _this.stompClient.send(
+      '/app/chat.register',
+      {},
+      JSON.stringify(systemMessage)
+    );
   }, this.onError);
-
-    // this.stompClient.connect({}, () => this.onConnected(username), this.onError);
   }
 
   private onError(error: any): void {
     console.error('WebSocket Error:', error);
-    // Handle the error
   }
 
   onUserJoin( payload : any ) : void{
     const message : StatusMessage = JSON.parse(payload.body)
-      this.user.next([...message.users]);
-      this.chatSubject.next({...this.chatSubject.value,...this.getUserChatHistory(message.history)})
+    this.user.next([...message.users]);
+    this.chatSubject.next({...this.chatSubject.value,...this.getUserChatHistory(message.history)})
   }
 
   getUserChatHistory(messages : Record<string,Array<Message>>){
-  let chatHistory :  Record<string,Array<Message>> = {};
-  for (const key in messages){
-    if(messages.hasOwnProperty(key)){
-      chatHistory[key + '-' + this.userid] = messages[key];
+    let chatHistory :  Record<string,Array<Message>> = {};
+    for (const key in messages){
+      if(messages.hasOwnProperty(key)){
+        chatHistory[key + '-' + this.userid] = messages[key];
+      }
     }
-  }
-  return chatHistory;
+    return chatHistory;
   }
 
 
@@ -145,19 +129,16 @@ export class WebSocketService implements OnDestroy{
       chatMessage.receiverName=this.receiverUsername;
       chatMessage.isGroupChat=false;
       chatMessage.type='CHAT';
-
-      console.log("chatMessage: ", chatMessage);
       this.stompClient.send('/app/chat.send', {}, JSON.stringify(chatMessage));
       this.messageSubject.next([...this.messageSubject.value, chatMessage]);
       const existingRecord = this.chatSubject.value[chatMessage.receiverId + "-" + chatMessage.senderId] || [];
-    const updatedChatRecord = [...existingRecord , chatMessage];
-    this.chatSubject.next({...this.chatSubject.value,[chatMessage.receiverId + "-" + chatMessage.senderId] : updatedChatRecord });
+      const updatedChatRecord = [...existingRecord , chatMessage];
+      this.chatSubject.next({...this.chatSubject.value,[chatMessage.receiverId + "-" + chatMessage.senderId] : updatedChatRecord });
     }
   }
 
   onMessageReceived = (payload: any): void => {
     const message : Message = JSON.parse(payload.body);
-    console.log(message);
     const existingRecord = this.chatSubject.value[message.senderId + "-"+ message.receiverId] || [];
     const updatedChatRecord = [...existingRecord , message];
     this.chatSubject.next({...this.chatSubject.value,[message.senderId + "-" + message.receiverId] : updatedChatRecord });
@@ -195,17 +176,12 @@ export class WebSocketService implements OnDestroy{
       {},
       JSON.stringify(leaveMessage)    
     );
-
-    // this.messageSubject.next([...this.messageSubject.value, systemMessage]);
   }
 
   leaveChat(username: string): void {
-
     if (this.stompClient) {
       this.onLeave(username);
       this.stompClient.disconnect();
     }
   }
-
-
 }
