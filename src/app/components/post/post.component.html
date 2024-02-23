@@ -9,13 +9,16 @@
                     </a>
                     </div>
 
-                <div class="col-auto">
+                <div class="col-9 p-0">
                     <b>
                         {{post.author.name}}
                     </b>
                     <br>
                     {{formatDate(post.createdAt)}}
                     </div>
+                <div class="col-auto" *ngIf="post.author.id === loggedUser.id">
+                    <button type="button" class="btn text-danger" (click)="deletePost()"><i class="bi bi-trash"></i></button>
+                </div>
             </div>
             </div>
             <div class="card-body">

@@ -12,6 +12,7 @@ import { PostsService } from 'src/app/services/posts.service';
   styleUrls: ['./feed.component.css']
 })
 export class FeedComponent implements OnInit{
+
   @Input()
   feed : string = "all"
   posts : Array<Post> = [];
@@ -70,5 +71,18 @@ export class FeedComponent implements OnInit{
     this.posts = [];
     this.loadingPost = false;
     this.loadPosts();
+  }
+
+  deletePost(data: string) {
+    this.postService.deletePost(data).subscribe({
+      next : (res) => {
+        const updatedPosts = this.posts.filter(post => post.id !== data);
+        this.posts = [...updatedPosts];
+      },
+      error : (err) => {
+        console.error("Could Not Delete Post");
+        
+      }
+    })
   }
 }
