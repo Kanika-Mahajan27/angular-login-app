@@ -1,11 +1,17 @@
-<app-navbar></app-navbar>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-1 mt-3 justify-content-start">
-            <app-back></app-back>
+        <div class="col-sm-1 mt-3 justify-content-start">
+            <app-navbar></app-navbar>
         </div>
-        <div class="col-11">
-            <router-outlet></router-outlet>
+        <div class="col-sm-11 custom-margin-top">
+            <div class="row">
+            <div class="col-12 justify-content-start">
+                <app-back></app-back>
+            </div>
+            <div class="col-12">
+                <router-outlet></router-outlet>
+            </div>
+            </div>
         </div>
     </div>
 </div>

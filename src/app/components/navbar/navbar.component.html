@@ -29,12 +29,20 @@
         </div>
         
     </nav> -->
-    <nav class="navbar navbar-expand-lg bg-body-secondary sticky-top">
+    <nav class="navbar navbar-expand-lg bg-body-secondary sticky-top ">
         <div class="container-fluid">
             <div class="navbar-brand text-dark">
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar"><i
-                        class="bi bi-window-sidebar"></i> App
-                    <i class="bi bi-chevron-right"></i></button>
+                <div>
+                    <div class="col-1">
+                        <h2 class="d-none d-lg-block">App</h2>
+                    </div>
+                    <div class="col-1">
+                        <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar"><i
+                                class="bi bi-window-sidebar"></i>
+                            <i class="bi bi-chevron-right"></i>App</button>
+                    </div>
+                </div>
+                    
             </div>
             <ul class="navbar-nav">
                 <div *ngIf="(otpService.otpVerified == false && loginService.getLoggedUser() == null) && loginService.getLoggedUser().name != null"
@@ -51,9 +59,7 @@
                 </div>
                 <div *ngIf="(otpService.otpVerified || loginService.getLoggedUser() != null) && loginService.getLoggedUser().name != null"
                     class="d-flex flex-row mt-2">
-                    <li class="nav-item p-1">
-                        <a routerLink="/home" class="nav-link text-dark">Home</a>
-                    </li>
+                    
                     <li class="nav-item p-1">
                         <a [routerLink]="'/user/'+loginService.getLoggedUser().id">
                             <p class="nav-link text-dark"><i class="bi bi-person-circle"></i> Welcome
@@ -64,15 +70,22 @@
             </ul>
         </div>
     </nav>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+<div *ngIf="(otpService.otpVerified && loginService.getLoggedUser() != null)" class="offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="sidebarLabel"><i class="bi bi-window-sidebar"></i> App</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar" aria-label="Close"></button>
     </div>
     <hr>
-    <div class="offcanvas-body">
-        <ul class="navbar-nav">
-            <li class="nav-item " (click)="connect()">
+    <div class="offcanvas-body navbar-with-border left">
+        <ul class="navbar-nav ">
+            <li class="nav-item " (click)="navigateToHome()">
+                <span
+                    class="h3 btn border border-top-0 border-end-0 border-start-0 border-top-0 border-dark rounded-0 sidebar-item text-align-start"><i
+                        class="bi bi-house"></i>
+                    Home</span>
+                
+            </li>
+            <li class="nav-item nav-link" (click)="connect()">
                 <span
                     class="h3 btn border border-top-0 border-end-0 border-start-0 border-top-0 border-dark rounded-0 sidebar-item text-align-start"><i
                         class="bi bi-chat-left-dots"></i>

@@ -1,6 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 import { OtpService } from 'src/app/services/otp.service';
 
@@ -12,7 +12,8 @@ import { OtpService } from 'src/app/services/otp.service';
 export class NavbarComponent {
 
   username!:string;
-  constructor(private websocketService:WebSocketService, public loginService:LoginService, public otpService:OtpService, private router: Router){
+  isSidebarOpen: boolean = false;
+  constructor(private websocketService:WebSocketService, public loginService:LoginService, public otpService:OtpService, public router: Router){
     this.username=loginService.loggedUser?.name!;
   }
   connect(): void {
@@ -47,4 +48,5 @@ export class NavbarComponent {
   leave(){
     this.websocketService.leaveChat(this.websocketService.username);    
   }
+  
 }
