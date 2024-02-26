@@ -67,7 +67,8 @@ export class UserProfileComponent implements OnInit{
     const reciever =  new UserInfo();
     reciever.id = this.user.id;
     reciever.name = this.user.name
-    this.webSocketService.join();
+    this.webSocketService.userid = this.loginService.getLoggedUser().id;
+    this.webSocketService.username = this.loginService.getLoggedUser().name;
     this.webSocketService.changeReceiver(reciever);
     this.router.navigate(['/chatbox']);
   }
