@@ -1,89 +1,64 @@
-<!-- <nav class="navbar container align-items-center" >
-        
-        <div class="navbar_right mt-3">
-            <h1 (click)="navigateToHome()">App</h1>
-        </div>
-        <div *ngIf="otpService.otpVerified==false" class="navbar">
-            
-            <div>
-                <button (click)="navigateToLoginPage()" class="btn btn-success">Login</button>
+<nav class="navbar navbar-expand-lg bg-body-secondary sticky-top">
+    <div class="container-fluid">
+        <div class="navbar-brand text-dark">
+            <div class="col-1">
+                <h2 class="d-none d-lg-block">App</h2>
             </div>
-            <div class="ms-2">
-                <button (click)="navigateToRegisterPage()" class="btn btn-primary">Register</button>
-            </div>
-
-        </div>
-        
-        <div *ngIf="otpService.otpVerified" class="navbar ">
-        
-            <span class="navbar-brand mb-0 h1 text-light">
-                Logged in as {{loginService.getLoggedUser()?.name}}
-            </span>
-            
-            <div>
-                <button (click)="connect()" class="btn btn-primary">Chat</button>
-            </div>
-            <div>
-                <button class="btn btn-danger ms-2" (click)="logout()">Logout</button>
+            <div class="col-1">
+                <button class="btn d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar"><i
+                        class="bi bi-window-sidebar"></i>
+                    <i class="bi bi-chevron-right"></i>App</button>
             </div>
         </div>
-        
-    </nav> -->
-    <nav class="navbar navbar-expand-lg bg-body-secondary sticky-top">
-        <div class="container-fluid">
-            <div class="navbar-brand text-dark">
-                <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar"><i
-                        class="bi bi-window-sidebar"></i> App
-                    <i class="bi bi-chevron-right"></i></button>
-            </div>
-            <ul class="navbar-nav">
-                <div *ngIf="(otpService.otpVerified == false && loginService.getLoggedUser() == null) && loginService.getLoggedUser().name != null"
-                    class="d-flex flex-row">
-                    <li class="nav-item p-1">
-                        <a routerLink="/home" class="nav-link text-dark">Home</a>
-                        </li>
-                        <li class="nav-item p-1">
-                        <a class="nav-link text-dark" href="/login">Login</a>
-                    </li>
-                    <li class="nav-item p-1">
-                        <a class="nav-link text-dark" href="/register">Register</a>
-                    </li>
-                </div>
-                <div *ngIf="(otpService.otpVerified || loginService.getLoggedUser() != null) && loginService.getLoggedUser().name != null"
-                    class="d-flex flex-row mt-2">
-                    <li class="nav-item p-1">
-                        <a routerLink="/home" class="nav-link text-dark">Home</a>
-                    </li>
-                    <li class="nav-item p-1">
-                        <a [routerLink]="'/user/'+loginService.getLoggedUser().id">
-                            <p class="nav-link text-dark"><i class="bi bi-person-circle"></i> Welcome
-                                {{loginService.getLoggedUser().name}}</p>
-                                </a>
-                    </li>
-                </div>
-            </ul>
-        </div>
-    </nav>
-<div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="sidebarLabel"><i class="bi bi-window-sidebar"></i> App</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <hr>
-    <div class="offcanvas-body">
         <ul class="navbar-nav">
-            <li class="nav-item " (click)="connect()">
-                <span
-                    class="h3 btn border border-top-0 border-end-0 border-start-0 border-top-0 border-dark rounded-0 sidebar-item text-align-start"><i
-                        class="bi bi-chat-left-dots"></i>
-                    Chat</span>
-            </li>
-            <li class="nav-item" (click)="logout()">
-                <span
-                    class="h3 btn border border-top-0 border-end-0 border-start-0 border-top-0 border-dark text-danger rounded-0 sidebar-item text-align-start"><i
-                        class="bi bi-box-arrow-left"></i>
-                    Logout</span>
-            </li>
+            <div *ngIf="(otpService.otpVerified == false && loginService.getLoggedUser() == null) && loginService.getLoggedUser().name != null"
+                class="d-flex flex-row">
+                <li class="nav-item p-1">
+                    <a class="nav-link text-dark" href="/login">Login</a>
+                </li>
+                <li class="nav-item p-1">
+                    <a class="nav-link text-dark" href="/register">Register</a>
+                </li>
+            </div>
+            <div *ngIf="(otpService.otpVerified || loginService.getLoggedUser() != null) && loginService.getLoggedUser().name != null"
+                class="d-flex flex-row mt-2">
+                <li class="nav-item p-1">
+                    <a [routerLink]="'/user/'+loginService.getLoggedUser().id">
+                        <p class="nav-link text-dark"><i class="bi bi-person-circle"></i> Welcome
+                            {{loginService.getLoggedUser().name}}</p>
+                            </a>
+                </li>
+            </div>
         </ul>
     </div>
+</nav>
+<div class="offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+<div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="sidebarLabel"><i class="bi bi-window-sidebar"></i> App</h5>
+    <button type="button" class="btn-close" data-bs-target="#sidebar" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<hr>
+<div class="offcanvas-body">
+    <ul class="navbar-nav">
+        <li class="nav-item " (click)="navigateToHome()">
+            <span
+                class="h3 btn border border-top-0 border-end-0 border-start-0 border-top-0 border-dark rounded-0 sidebar-item text-align-start"><i
+                    class="bi bi-house"></i>
+                Home</span>
+            
+        </li>
+        <li class="nav-item " (click)="connect()">
+            <span
+                class="h3 btn border border-top-0 border-end-0 border-start-0 border-top-0 border-dark rounded-0 sidebar-item text-align-start"><i
+                    class="bi bi-chat-left-dots"></i>
+                Chat</span>
+        </li>
+        <li class="nav-item" (click)="logout()">
+            <span
+                class="h3 btn border border-top-0 border-end-0 border-start-0 border-top-0 border-dark text-danger rounded-0 sidebar-item text-align-start"><i
+                    class="bi bi-box-arrow-left"></i>
+                Logout</span>
+        </li>
+    </ul>
+</div>
 </div>
