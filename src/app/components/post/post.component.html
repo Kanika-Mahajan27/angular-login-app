@@ -17,7 +17,15 @@
                     {{formatDate(post.createdAt)}}
                     </div>
                 <div class="col-auto" *ngIf="post.author.id === loggedUser.id">
-                    <button type="button" class="btn text-danger" (click)="deletePost()"><i class="bi bi-trash"></i></button>
+                    <div class="dropdown-center">
+                        <button class="btn " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class=" h4 bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><button class="dropdown-item btn text-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal"><i
+                                        class="bi bi-trash3-fill"></i> Delete</button></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             </div>
@@ -29,4 +37,19 @@
                     (click)="likePost(post.id)"></i> {{post.likes.length}}
         </div>
     </div>
-</div>
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Are you sure you want to delete this post ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn" data-bs-dismiss="modal">Close</button>
+                    <button (click)="deletePost()" type="button" class="btn btn-danger"
+                        data-bs-dismiss="modal"> <i class="bi bi-trash3-fill"></i> Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
