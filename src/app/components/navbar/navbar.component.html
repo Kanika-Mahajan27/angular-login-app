@@ -32,7 +32,7 @@
         </ul>
     </div>
 </nav>
-<div class="offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+<div *ngIf="(otpService.otpVerified && loginService.getLoggedUser() != null)" class="offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
 <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="sidebarLabel"><i class="bi bi-window-sidebar"></i> App</h5>
     <button type="button" class="btn-close" data-bs-target="#sidebar" data-bs-dismiss="offcanvas" aria-label="Close"></button>
