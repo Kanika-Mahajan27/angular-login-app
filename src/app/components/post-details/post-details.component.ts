@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from 'src/app/model/post.model';
+import { CommentService } from 'src/app/services/comment.service';
 import { LoginService } from 'src/app/services/login.service';
 import { PostsService } from 'src/app/services/posts.service';
 
@@ -13,8 +14,9 @@ import { PostsService } from 'src/app/services/posts.service';
 export class PostDetailsComponent implements OnInit {
 
   post!: Post;
+  commentCount: number = 0;
 
-  constructor(private route:ActivatedRoute, private postsService:PostsService, private loginService:LoginService){}
+  constructor(private route:ActivatedRoute, private postsService:PostsService, private loginService:LoginService,private commentService : CommentService){}
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const postId = params.get('id'); // Get postId from URL
@@ -28,12 +30,14 @@ export class PostDetailsComponent implements OnInit {
     this.postsService.getPostDetails(postId).subscribe({
       next: (post: Post) => {
         this.post = post;
+        this.getcommentCount();
       },
       error: (err) => {
         console.error(err);
         // Handle error
       }
     });
+
   }
 
   formatDate(date : Date) {
@@ -63,8 +67,20 @@ export class PostDetailsComponent implements OnInit {
     });
   }
 
-  isPostLiked(postId: string): boolean {
-    return this.post.likes.includes(this.loginService.getLoggedUser().id!);
+  isPostLiked(): boolean {
+    return this.post.likes.includes(this.loginService.getLoggedUser().id) || this.post.likes.includes(this.loginService.getLoggedUser().email) ;
+  }
+
+  getcommentCount(){
+    this.commentService.getCommentCount(this.post.id).subscribe({
+      next : (res : number)=>{
+        this.commentCount = res;
+      },
+      error : (err)=>{
+        console.error(err);
+        
+      }
+    });
   }
 
 }

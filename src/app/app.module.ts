@@ -35,6 +35,9 @@ import { UserProfileComponent } from './components/user-profile/user-profile.com
 import { NotificationComponent } from './components/notification/notification.component';
 import { BackComponent } from './components/back/back.component';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { CommentFormComponent } from './components/comment-form/comment-form.component';
+import { CommentFeedComponent } from './components/comment-feed/comment-feed.component';
+import { CommentComponent } from './components/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,10 @@ import { ActivatedRouteSnapshot } from '@angular/router';
     CreatePostComponent,
     ProfileSetupComponent,
     UserProfileComponent,
-    BackComponent
+    BackComponent,
+    CommentFormComponent,
+    CommentFeedComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

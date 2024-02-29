@@ -33,8 +33,18 @@
                 <p class="card-text">{{post.content.substring(0,101)}}...<span style="color: blue; cursor: pointer;"
                         (click)="goToPostDetails(post.id)">Read More</span></p>
                 <hr>
-                <i class="bi" [ngClass]="{ 'bi-heart': !isPostLiked(post.id), 'bi-heart-fill text-danger': isPostLiked(post.id) }"
-                    (click)="likePost(post.id)"></i> {{post.likes.length}}
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-center">
+                        <i class="bi pt-2" [ngClass]="{ 'bi-heart': !isPostLiked(), 'bi-heart-fill text-danger': isPostLiked() }"
+                            (click)="likePost(post.id)"></i>
+                        <p class="m-1">{{post.likes.length}}</p>
+                
+                    </div>
+                    <div class="col-6 d-flex justify-content-center">
+                        <i class="bi bi-chat-left-text pt-2"></i>
+                        <p class="m-1">{{commentCount}}</p>
+                    </div>
+                </div>
         </div>
     </div>
     <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel"
