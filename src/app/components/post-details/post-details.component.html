@@ -1,27 +1,47 @@
 <div class="container mt-5 justify-content-center">
-    <div class="card  border-dark  mt-3 mb-3 post">
-        <div class="card-header text-dark bg-info-subtle">
-            <div class="row">
-                <div class="col-auto">
-                    <a [routerLink]="'/user/'+post.author.id">
-                        <img [src]="'data:image/png;base64'+','+post.author.image" class="img-fluid rounded-circle" alt="avatar"
-                            height="50" width="50">
-                    </a>
+    <nav class="navbar ">
+        <div class="container">
+            <a class="navbar-brand text-dark text-center" href="#"><i class="bi bi-newspaper"></i> Post</a>
+        </div>
+    </nav>
+    <div class="row p-0 m-0">
+        <div class="card p-0  border-dark  mt-3 mb-3 post">
+            <div class="card-header text-dark bg-info-subtle">
+                <div class="row">
+                    <div class="col-auto">
+                        <a [routerLink]="'/user/'+post.author.id">
+                            <img [src]="'data:image/png;base64'+','+post.author.image" class="img-fluid rounded-circle" alt="avatar" height="50"
+                                width="50">
+                            </a>
+                            </div>
+                            <div class="col-auto">
+                                <b>
+                                    {{post.author.name}}
+                                </b>
+                                <br>
+                                {{formatDate(post.createdAt)}}
+                            </div>
                 </div>
-                <div class="col-auto">
-                    <b>
-                        {{post.author.name}}
-                    </b>
-                    <br>
-                    {{formatDate(post.createdAt)}}
-                </div>
-                </div>
-                </div>
-                <div class="card-body">
-            <p class="card-text">{{post.content}}</p>
-            <hr>
-            <i class="bi" [ngClass]="{ 'bi-heart': !isPostLiked(post.id), 'bi-heart-fill text-danger': isPostLiked(post.id) }"
-                (click)="likePost(post.id)"></i> {{post.likes.length}}
             </div>
+            <div class="card-body">
+                <p class="card-text">{{post.content}}</p>
+                <hr>
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-center">
+                        <i class="bi pt-2" [ngClass]="{ 'bi-heart': !isPostLiked(), 'bi-heart-fill text-danger': isPostLiked() }"
+                            (click)="likePost(post.id)"></i>
+                        <p class="m-1">{{post.likes.length}}</p>
+                
+                    </div>
+                    <div class="col-6 d-flex justify-content-center">
+                        <i class="bi bi-chat-left-text pt-2"></i>
+                        <p class="m-1">{{commentCount}}</p>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="row p-0 m-0">
+                        <app-comment-form class="p-0 m-0" [post]="post"></app-comment-form>
     </div>
 </div>

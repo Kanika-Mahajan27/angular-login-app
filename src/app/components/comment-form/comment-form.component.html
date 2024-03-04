@@ -1,0 +1,16 @@
+<form [formGroup]="commentForm" (ngSubmit)="submitComment()">
+    <div class="form-group mt-3 ">
+        <div class="input-group mb3">
+            <span class="input-group-text bg-white border border-0 "><img class=" rounded-circle"
+                    [src]="'data:image/png;base64'+','+authorImage" alt="" height="35" width="35"></span>
+            <input type="text" class="form-control" id="content" formControlName="content" rows="4"
+                placeholder="Write a comment" autocomplete="off">
+            <div *ngIf="content?.invalid && (content?.dirty || content?.touched)" class="text-danger">
+                <div *ngIf="content?.errors?.['required']">Content is required.</div>
+            </div>
+            <button type="submit" class="btn text-dark btn-outline-info"><i class="bi bi-chat-left-text-fill"></i>
+                Comment</button>
+        </div>
+    </div>
+</form>
+<app-comment-feed [postId]="post.id"></app-comment-feed>

@@ -4,6 +4,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Notification } from 'src/app/model/notification.model';
 import { Post } from 'src/app/model/post.model';
 import { User } from 'src/app/model/user';
+import { CommentService } from 'src/app/services/comment.service';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PostsService } from 'src/app/services/posts.service';
@@ -26,12 +27,13 @@ export class PostComponent implements OnInit  {
     timestamp: null
   };
   messageSent:boolean=false;
-  constructor(public postsService: PostsService, private loginService : LoginService, private router:Router, private notificationService: NotificationService) {
+  constructor(public postsService: PostsService, private loginService : LoginService, private router:Router, private notificationService: NotificationService,private commentService : CommentService) {
     
    }
 
   @Input()
   post! : Post;
+  commentCount : number = 0;
 
   @Output() deletePostEvent = new EventEmitter<string>();
 
@@ -46,6 +48,8 @@ export class PostComponent implements OnInit  {
         this.recentNotificationChange.emit(this.recentNotification); 
       }
     });
+       this.getcommentCount();
+
   }
   showBootstrapToast(message: Notification):void {
     
@@ -69,8 +73,6 @@ export class PostComponent implements OnInit  {
        }
        this.post.likes = [...this.post.likes];
        this.post={...this.post};
-       console.log(this.post.likes);
-
         
       }, error(err) {
         console.error(err);
@@ -85,8 +87,8 @@ export class PostComponent implements OnInit  {
     this.router.navigate(['/post-details', postId]);
   }
 
-  isPostLiked(postId: string): boolean {
-    return this.post.likes.includes(this.loginService.getLoggedUser().id!);
+  isPostLiked(): boolean {
+    return this.post.likes.includes(this.loginService.getLoggedUser().id) || this.post.likes.includes(this.loginService.getLoggedUser().email) ;
   }
 
   getImageFromBase64(base64String: string) {
@@ -102,5 +104,16 @@ export class PostComponent implements OnInit  {
     this.deletePostEvent.emit(this.post.id);
   }
   
+  getcommentCount(){
+    this.commentService.getCommentCount(this.post.id).subscribe({
+      next : (res : number)=>{
+        this.commentCount = res;
+      },
+      error : (err)=>{
+        console.error(err);
+        
+      }
+    });
+  }
 
 }
