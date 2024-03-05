@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { PostPage } from '../model/post-page.model';
 import { Observable, of } from 'rxjs';
 import { Post } from '../model/post.model';
+import { PostDetails } from '../model/post-details.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,9 @@ export class PostsService {
     return this.httpClient.get<PostPage>(`${this.BASE_URL}?page=${page}&size=${size}&feed=${feed}`,{headers});
   }
 
-  getPostDetails(postId: string):Observable<Post>{
+  getPostDetails(postId: string):Observable<PostDetails>{
     const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("authToken")}`);
-    return this.httpClient.get<Post>(`${this.BASE_URL}/${postId}`, {headers});
+    return this.httpClient.get<PostDetails>(`${this.BASE_URL}/${postId}`, {headers});
   }
 
   likePost(postId: string): Observable<any> {
