@@ -5,6 +5,7 @@ import { CommentService } from 'src/app/services/comment.service';
 import { LoginService } from 'src/app/services/login.service';
 import { CommentFeedComponent } from '../comment-feed/comment-feed.component';
 import { Comment } from 'src/app/model/comment.model';
+import { PostDetails } from 'src/app/model/post-details.model';
 
 @Component({
   selector: 'app-comment-form',
@@ -14,6 +15,7 @@ import { Comment } from 'src/app/model/comment.model';
 export class CommentFormComponent {
 commentForm!: FormGroup;
 @Input()
+postDetails! : PostDetails;
 post! : Post;
 
 @ViewChild(CommentFeedComponent) commentFeedComponent! : CommentFeedComponent;
@@ -21,6 +23,7 @@ post! : Post;
 constructor(private fb : FormBuilder,private commentService : CommentService,private loginService : LoginService){}
 
   ngOnInit() {
+    this.post = this.postDetails.post;
     this.commentForm= this.fb.group({
       content: ['', Validators.required]
     });

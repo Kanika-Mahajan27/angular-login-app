@@ -21,7 +21,7 @@ export class PostsService {
 
   getPostDetails(postId: string):Observable<PostDetails>{
     const headers = new HttpHeaders().set("Authorization", `Bearer ${localStorage.getItem("authToken")}`);
-    return this.httpClient.get<PostDetails>(`${this.BASE_URL}/${postId}`, {headers});
+    return this.httpClient.get<PostDetails>(`${this.BASE_URL}/${postId}?includeComments=true`, {headers});
   }
 
   likePost(postId: string): Observable<any> {

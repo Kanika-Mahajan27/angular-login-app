@@ -12,17 +12,18 @@ import { LoginService } from 'src/app/services/login.service';
 export class CommentFeedComponent implements OnInit{
   @Input()
   postId! : string;
+  @Input()
   comments : Array<Comment> =[];
   last : boolean = false;
   total! : number;
-  page : number = 1;
+  page : number = 2;
   size : number = 5;
   loadingComments : boolean = false;
 
   constructor(private commentService : CommentService,private loginService : LoginService){}
 
   ngOnInit(){
-    this.loadComments();
+    // this.loadComments();
   }
 
   loadComments(){
@@ -43,8 +44,7 @@ export class CommentFeedComponent implements OnInit{
     })
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll() {
+  loadMoreComments() {
       if (this.last == false && this.loadingComments == false) {
         this.loadComments();
       }

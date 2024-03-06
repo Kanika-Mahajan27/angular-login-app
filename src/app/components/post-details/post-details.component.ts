@@ -18,6 +18,7 @@ import { PostsService } from 'src/app/services/posts.service';
 export class PostDetailsComponent implements OnInit {
 
   post!: Post;
+  postDetails! : PostDetails;
   commentCount: number = 0;
   likedByUser : User[] = [];
 
@@ -36,6 +37,7 @@ export class PostDetailsComponent implements OnInit {
     this.postsService.getPostDetails(postId).subscribe({
       next: (post: PostDetails) => {
         this.post = post.post;
+        this.postDetails = post
         this.getcommentCount();
         this.fetchLikedByUsers().subscribe({
           next : (res : User[]) => {
