@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Post } from 'src/app/model/post.model';
 import { CommentService } from 'src/app/services/comment.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -25,7 +25,7 @@ constructor(private fb : FormBuilder,private commentService : CommentService,pri
   ngOnInit() {
     this.post = this.postDetails.post;
     this.commentForm= this.fb.group({
-      content: ['', Validators.required]
+      content: ['', [Validators.required, this.noWhitespaceValidator]]
     });
   }
 
@@ -57,6 +57,13 @@ submitComment() {
 
 get authorImage(){
   return this.loginService.getLoggedUser().image;
+}
+
+noWhitespaceValidator(control: AbstractControl): { [key: string]: boolean } | null {
+  if (control.value.trim() === '') {
+    return { 'required': true };
+  }
+  return null;
 }
 
 }

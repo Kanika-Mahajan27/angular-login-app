@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Post } from 'src/app/model/post.model';
 import { User } from 'src/app/model/user';
@@ -17,7 +17,7 @@ export class CreatePostComponent {
   user : User =  JSON.parse(localStorage.getItem("loggedUser")!);
   ngOnInit() {
     this.postForm = this.formBuilder.group({
-      content: ['', Validators.required]
+      content: ['', [Validators.required, this.noWhitespaceValidator]]
     });
   }
   get content() {
@@ -39,5 +39,12 @@ export class CreatePostComponent {
     } else {
       this.postForm.markAllAsTouched();
     }
+  }
+  
+  noWhitespaceValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    if (control.value.trim() === '') {
+      return { 'required': true };
+    }
+    return null;
   }
 }
