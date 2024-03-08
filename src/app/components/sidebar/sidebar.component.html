@@ -1,0 +1,28 @@
+<div class="offcanvas-lg offcanvas-start" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel">
+<div class="offcanvas-header">
+    <h5 class="offcanvas-title fs-3" id="sidebarLabel"><i class="bi bi-window-sidebar"></i> App</h5>
+    <button type="button" class="btn-close" data-bs-target="#sidebar" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<div class="offcanvas-body justify-content-center">
+    <ul class="navbar-nav align-items-center">
+        <li class="nav-item " (click)="navigateToHome()">
+            <span
+                class="h3 btn sidebar-item text-align-start"><i
+                    class="bi bi-house"></i>
+                Home</span>
+            
+        </li>
+        <li class="nav-item " (click)="connect()">
+            <span
+                class="h3 btn sidebar-item text-align-start"><i
+                    class="bi bi-chat-left-dots"></i>
+                Chat</span>
+        </li>
+        <li class="nav-item" (click)="logout()">
+            <span
+                class="h3 btn text-danger rounded-0 sidebar-item text-align-start"><i
+                    class="bi bi-box-arrow-left"></i>
+                Logout</span>
+        </li>
+    </ul>
+</div>
