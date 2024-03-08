@@ -1,5 +1,5 @@
-import { ChangeDetectorRef, Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ActivatedRoute} from '@angular/router';
 import { Notification } from 'src/app/model/notification.model';
 import { PostPage } from 'src/app/model/post-page.model';
 import { Post } from 'src/app/model/post.model';
@@ -29,7 +29,7 @@ export class FeedComponent implements OnInit{
   user! : User;
   @ViewChild('exampleModal') modal!: ElementRef;
 
-  constructor(private notificationService: NotificationService, private postService : PostsService, private loginService : LoginService, private route:ActivatedRoute,private renderer: Renderer2){}
+  constructor(private notificationService: NotificationService, private postService : PostsService, private loginService : LoginService, private route:ActivatedRoute){}
 
   ngOnInit(): void {
     this.loadPosts();
@@ -88,7 +88,6 @@ export class FeedComponent implements OnInit{
 
   onShowToastMessageChange(showToastMessage: boolean) {
     this.showToastMessage = showToastMessage;
-    // Handle showToastMessage change here
   }
   
   public refreshFeed(){
