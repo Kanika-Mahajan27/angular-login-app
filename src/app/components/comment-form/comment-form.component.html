@@ -9,7 +9,7 @@
                 <i class="bi bi-chat-left-text-fill"></i>
                 Comment</button>
         </div>
-        <div *ngIf="commentForm.get('content')?.invalid && (commentForm.get('content')?.dirty )" class="text-danger mt-2 ">
+        <div *ngIf="commentForm.get('content')?.invalid && commentForm.get('content')?.dirty && commentForm.get('content')?.value" class="text-danger mt-2 ">
             <div class="ml-5 ps-5" *ngIf="commentForm.get('content')?.errors?.['required']">Enter valid comment</div>
         </div>
     </div>

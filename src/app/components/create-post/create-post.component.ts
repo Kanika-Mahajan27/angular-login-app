@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Post } from 'src/app/model/post.model';
 import { User } from 'src/app/model/user';
 import { PostsService } from 'src/app/services/posts.service';
+import { noWhitespaceValidator } from 'src/app/validators/noWhitespaceValidator';
 
 @Component({
   selector: 'app-create-post',
@@ -11,13 +12,12 @@ import { PostsService } from 'src/app/services/posts.service';
   styleUrls: ['./create-post.component.css']
 })
 export class CreatePostComponent {
-  postForm!: FormGroup;
-
+  postForm!: FormGroup; 
   constructor(private formBuilder: FormBuilder,private postService : PostsService,private router : Router) {}
   user : User =  JSON.parse(localStorage.getItem("loggedUser")!);
   ngOnInit() {
     this.postForm = this.formBuilder.group({
-      content: ['', [Validators.required, this.noWhitespaceValidator]]
+      content: ['', [Validators.required, noWhitespaceValidator()]]
     });
   }
   get content() {
@@ -40,11 +40,5 @@ export class CreatePostComponent {
       this.postForm.markAllAsTouched();
     }
   }
-  
-  noWhitespaceValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    if (control.value.trim() === '') {
-      return { 'required': true };
-    }
-    return null;
-  }
+
 }

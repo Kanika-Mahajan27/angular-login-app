@@ -6,6 +6,7 @@ import { LoginService } from 'src/app/services/login.service';
 import { CommentFeedComponent } from '../comment-feed/comment-feed.component';
 import { Comment } from 'src/app/model/comment.model';
 import { PostDetails } from 'src/app/model/post-details.model';
+import { noWhitespaceValidator } from 'src/app/validators/noWhitespaceValidator';
 
 @Component({
   selector: 'app-comment-form',
@@ -25,7 +26,7 @@ constructor(private fb : FormBuilder,private commentService : CommentService,pri
   ngOnInit() {
     this.post = this.postDetails.post;
     this.commentForm= this.fb.group({
-      content: ['', [Validators.required, this.noWhitespaceValidator]]
+      content: ['', [Validators.required, noWhitespaceValidator()]]
     });
   }
 
@@ -57,13 +58,6 @@ submitComment() {
 
 get authorImage(){
   return this.loginService.getLoggedUser().image;
-}
-
-noWhitespaceValidator(control: AbstractControl): { [key: string]: boolean } | null {
-  if (control.value.trim() === '') {
-    return { 'required': true };
-  }
-  return null;
 }
 
 }

@@ -8,7 +8,7 @@
             <form [formGroup]="postForm" (ngSubmit)="submitPost()">
                 <textarea class="form-control mb-3" id="content" formControlName="content" rows="4"
                     placeholder="Whats on your mind..."></textarea>
-                <div *ngIf="content?.invalid && (content?.dirty)" class="text-danger">
+                <div *ngIf="content?.invalid && content?.dirty && content?.value" class="text-danger">
                     <div *ngIf="content?.errors?.['required']">Content is required.</div>
                 </div>
                 <button type="submit" class="btn text-dark bg-info-subtle" [disabled]="!postForm.valid"><i class="bi bi-newspaper"></i> Create Post</button>
