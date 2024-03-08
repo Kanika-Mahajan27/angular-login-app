@@ -1,3 +1,8 @@
 .custom-margin-top {
     margin-top: 80px; /* Adjust the value as needed */
 }
+@media (max-width : 768px) {
+    .navigation-col{
+        border: none !important;
+    }
+}

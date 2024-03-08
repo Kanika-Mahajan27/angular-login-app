@@ -16,14 +16,6 @@ export class NavbarComponent {
   constructor(private websocketService:WebSocketService, public loginService:LoginService, public otpService:OtpService, public router: Router){
     this.username=loginService.loggedUser?.name!;
   }
-  connect(): void {
-    
-      const username=this.loginService.loggedUser?.name;
-      this.websocketService.username=username!;
-      this.websocketService.join();
-      this.router.navigate(['/chatbox'])
-    
-  }
   navigateToLoginPage():void{
     this.router.navigate(['/login'])
   }
@@ -33,20 +25,8 @@ export class NavbarComponent {
   navigateToHome(): void {
     this.router.navigate(['/home']);
   }
-  logout(): void {
-    this.leave();
-    this.loginService.logoutUser();
-    localStorage.removeItem("loggedUser");
-    localStorage.removeItem("authToken");
-  }
-
-    @HostListener('window:beforeunload', ['$event'])
+  @HostListener('window:beforeunload', ['$event'])
   unloadHandler(event: Event): void {
     this.websocketService.leaveChat(this.websocketService.username);
-  }
-
-  leave(){
-    this.websocketService.leaveChat(this.websocketService.username);    
-  }
-  
+  }  
 }

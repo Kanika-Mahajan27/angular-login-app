@@ -51,7 +51,9 @@ const routes: Routes = [
   },
   {
     path:'chatbox',
-    component:ChatboxContainerComponent
+    component:ChatboxContainerComponent,
+    canActivate:[AuthguardService]
+
   },
   {
     path: 'linkedInLogin',
@@ -59,7 +61,9 @@ const routes: Routes = [
   },
   {
     path:'post-details/:id',
-    component : PostDetailsComponent
+    component : PostDetailsComponent,
+    canActivate:[AuthguardService]
+
   },
   {
     path : 'setup',
@@ -68,7 +72,9 @@ const routes: Routes = [
   },
   {
     path : "user/:id",
-    component : UserProfileComponent
+    component : UserProfileComponent,
+    canActivate:[AuthguardService]
+
   }
   
 ];
