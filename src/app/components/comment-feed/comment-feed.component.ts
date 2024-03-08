@@ -13,7 +13,8 @@ export class CommentFeedComponent implements OnInit{
   @Input()
   postId! : string;
   @Input()
-  comments : Array<Comment> =[];
+  commentPage! : CommentPage ;
+  comments :  Array<Comment> = [];
   last : boolean = false;
   total! : number;
   page : number = 2;
@@ -23,7 +24,8 @@ export class CommentFeedComponent implements OnInit{
   constructor(private commentService : CommentService,private loginService : LoginService){}
 
   ngOnInit(){
-    // this.loadComments();
+    this.comments = this.commentPage.comments;
+    this.last = this.commentPage.last;
   }
 
   loadComments(){

@@ -73,24 +73,19 @@
                     </div>
                     <div class="modal-body">
                         <div *ngFor="let user of likedByUser">
-                            <div class="row">
+                            <div class="row btn d-flex flex-row" [routerLink]="user.id ? ['/user', user.id] : null" [ngClass]="{'like-user-row' : user.id}" data-bs-dismiss="modal">
                                 <div class="col-1">
                                     <img class=" rounded-circle" [src]="'data:image/png;base64'+','+user.image" alt=""
                                         height="30" width="30">
                                 </div>
-                                <div class="col-11">
+                                <div class="col-11 text-start">
                                     <p class="h6 ms-1 p-1">{{user.name}}</p>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div *ngIf="loading">
-                                                                        <div class="text-center">
-                                                                            <div class="spinner-border text-dark" role="status">
-                                                                                <span class="visually-hidden">Loading...</span>
-                                                                            </div>
-                                                                            <h3>Loading Likes...</h3>
-                                                                        </div>
-                                                                    </div> -->
+                        <div *ngIf="likedByUser.length === 0">
+                            <h3>No likes yet.</h3>
+                        </div>
                     </div>
                 </div>
             </div>

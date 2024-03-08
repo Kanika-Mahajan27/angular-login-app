@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, catchError, forkJoin, of } from 'rxjs';
 import { PostDetails } from 'src/app/model/post-details.model';
 import { Post } from 'src/app/model/post.model';
 import { User } from 'src/app/model/user';
@@ -100,7 +100,15 @@ export class PostDetailsComponent implements OnInit {
   }
 
   fetchLikedByUsers(): Observable<User[]> {
-    const requests = this.post.likes.map((id) => this.loginService.getUserProfile(id));
+    const requests = this.post.likes.map((id) => this.loginService.getUserProfile(id).pipe(
+      catchError((error)=>{
+        console.warn("Could not fetch user id : "+id);
+        const defaultUser = new User();
+        defaultUser.name = "A User";
+        defaultUser.id = "";
+        return of(defaultUser);
+      })
+    ));
     return forkJoin(requests);
   }
 

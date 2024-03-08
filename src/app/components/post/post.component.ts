@@ -8,7 +8,7 @@ import { CommentService } from 'src/app/services/comment.service';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PostsService } from 'src/app/services/posts.service';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, catchError, forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -126,7 +126,15 @@ export class PostComponent implements OnInit  {
   }
 
   fetchLikedByUsers(): Observable<User[]> {
-    const requests = this.post.likes.map((id) => this.loginService.getUserProfile(id));
+    const requests = this.post.likes.map((id) => this.loginService.getUserProfile(id).pipe(
+      catchError((error)=>{
+        console.warn("Could not fetch user id : "+id);
+        const defaultUser = new User();
+        defaultUser.name = "Unknown User";
+        defaultUser.id = "";
+        return of(defaultUser);
+      })
+    ));
     return forkJoin(requests);
   }
 
