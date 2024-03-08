@@ -1,17 +1,48 @@
 <div class="container align-items-center mt-3 scrollable" #scrollableDiv>
-    <div *ngFor="let post of posts">
-        <div>
-            <app-post [post]="post" (showToastMessageChange)="showToastMessage = $event" (deletePostEvent)="deletePost($event)"></app-post>
-        </div>
-    </div>
-    <div *ngIf="loadingPost">
+    <div *ngIf="noPosts; else showPosts">
         <div class="text-center">
-            <div class="spinner-border text-dark" role="status">
-                <span class="visually-hidden">Loading...</span>
+            <h3 *ngIf="user.id != currentUser.id">No posts to show</h3>
+            <div *ngIf="user.id===currentUser.id">
+                <div class="mt-3">
+                    <div style="font-size: 3rem;"><i class="bi-3x bi-postcard"></i></div>
+                    <h1 style="font-weight: bold;">Your Posts Appear Here.</h1>
+                </div>
+                
+                <button type="button" class="btn btn-primary mt-4" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Create Your first post!
+                </button>
+
+                <div class="modal fade" #exampleModal id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Create your first post</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <app-create-post (postCreated)="dismissModal()" ></app-create-post>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
             </div>
-            <h3>Loading posts...</h3>
         </div>
     </div>
+    <ng-template #showPosts>
+        <div *ngFor="let post of posts">
+            <div>
+                <app-post [post]="post" (showToastMessageChange)="showToastMessage = $event" (deletePostEvent)="deletePost($event)"></app-post>
+            </div>
+        </div>
+        <div *ngIf="loadingPost">
+            <div class="text-center">
+                <div class="spinner-border text-dark" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <h3>Loading posts...</h3>
+            </div>
+        </div>
+    </ng-template>
     <div>
         <app-notification></app-notification>
     </div>

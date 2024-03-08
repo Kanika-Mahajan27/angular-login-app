@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Post } from 'src/app/model/post.model';
@@ -12,7 +12,8 @@ import { PostsService } from 'src/app/services/posts.service';
 })
 export class CreatePostComponent {
   postForm!: FormGroup;
-
+  @Output() postCreated: EventEmitter<void> = new EventEmitter<void>();
+  
   constructor(private formBuilder: FormBuilder,private postService : PostsService,private router : Router) {}
   user : User =  JSON.parse(localStorage.getItem("loggedUser")!);
   ngOnInit() {
@@ -29,7 +30,8 @@ export class CreatePostComponent {
         const post  = this.postForm.value;
         this.postService.createPost(post).subscribe({
           next : (res : Post)=>{
-            this.router.navigate([`/post-details/${res.id}`]);
+            this.postCreated.emit();
+            this.router.navigate([`/post-details/${res.id}`]);            
           },
           error(err) {
               console.error(err);
@@ -40,4 +42,5 @@ export class CreatePostComponent {
       this.postForm.markAllAsTouched();
     }
   }
+
 }
