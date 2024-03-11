@@ -104,7 +104,7 @@ export class PostDetailsComponent implements OnInit {
       catchError((error)=>{
         console.warn("Could not fetch user id : "+id);
         const defaultUser = new User();
-        defaultUser.name = "A User";
+        defaultUser.name = "Unknown User";
         defaultUser.id = "";
         return of(defaultUser);
       })
