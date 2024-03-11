@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, catchError, forkJoin, of } from 'rxjs';
 import { PostDetails } from 'src/app/model/post-details.model';
-import { PostDetails } from 'src/app/model/post-details.model';
 import { Post } from 'src/app/model/post.model';
 import { User } from 'src/app/model/user';
 import { CommentService } from 'src/app/services/comment.service';
