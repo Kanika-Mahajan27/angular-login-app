@@ -4,4 +4,5 @@ import { Post } from "./post.model";
 export class PostDetails {
     post! : Post
     comments! : CommentPage
+
 }

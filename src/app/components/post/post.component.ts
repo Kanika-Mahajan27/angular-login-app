@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { Notification } from 'src/app/model/notification.model';
 import { Post } from 'src/app/model/post.model';
@@ -8,6 +8,7 @@ import { CommentService } from 'src/app/services/comment.service';
 import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PostsService } from 'src/app/services/posts.service';
+import { Observable, catchError, forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-post',
@@ -15,7 +16,6 @@ import { PostsService } from 'src/app/services/posts.service';
   styleUrls: ['./post.component.css']
 })
 export class PostComponent implements OnInit  {
-
   @Output() showToastMessageChange = new EventEmitter<boolean>();
   showToastMessage:boolean=false;
   @Output() recentNotificationChange = new EventEmitter<Notification>();
@@ -34,6 +34,7 @@ export class PostComponent implements OnInit  {
   @Input()
   post! : Post;
   commentCount : number = 0;
+  likedByUser : User[] = [];
 
   @Output() deletePostEvent = new EventEmitter<string>();
 
@@ -48,8 +49,15 @@ export class PostComponent implements OnInit  {
         this.recentNotificationChange.emit(this.recentNotification); 
       }
     });
-       this.getcommentCount();
-
+    this.getcommentCount();
+    this.fetchLikedByUsers().subscribe({
+      next : (res : User[]) => {
+        this.likedByUser = [...res];
+      },
+      error : (err) =>{
+        console.warn(err);
+      }
+    })
   }
   showBootstrapToast(message: Notification):void {
     
@@ -66,14 +74,15 @@ export class PostComponent implements OnInit  {
         const userLikedIndex = this.post.likes.findIndex(id => id === JSON.parse(localStorage.getItem("loggedUser")!)?.id);
        if(userLikedIndex != -1){
         this.post.likes.splice(userLikedIndex, 1)
+        this.removeUserFromLikes(this.loginService.getLoggedUser().id);
        }
        else{
-        this.post.likes.push(JSON.parse(localStorage.getItem("loggedUser")!)?.id);
+        this.post.likes.push(this.loginService.getLoggedUser().id);
+        this.addUserToLiked(this.loginService.getLoggedUser().id)
        
        }
        this.post.likes = [...this.post.likes];
-       this.post={...this.post};
-        
+       this.post={...this.post};        
       }, error(err) {
         console.error(err);
       }
@@ -116,4 +125,29 @@ export class PostComponent implements OnInit  {
     });
   }
 
+  fetchLikedByUsers(): Observable<User[]> {
+    const requests = this.post.likes.map((id) => this.loginService.getUserProfile(id).pipe(
+      catchError((error)=>{
+        console.warn("Could not fetch user id : "+id);
+        const defaultUser = new User();
+        defaultUser.name = "Unknown User";
+        defaultUser.id = "";
+        return of(defaultUser);
+      })
+    ));
+    return forkJoin(requests);
+  }
+
+  addUserToLiked(id : string){
+    this.loginService.getUserProfile(id).subscribe({
+      next : (res : User)=>{
+        this.likedByUser.push(res);
+        this.likedByUser = [...this.likedByUser];
+      }
+    })
+  }
+
+  removeUserFromLikes(id : string){
+    this.likedByUser = [...this.likedByUser.filter((user)=> user.id !== id)];
+  }
 }

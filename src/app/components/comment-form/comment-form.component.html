@@ -3,14 +3,15 @@
         <div class="input-group mb3">
             <span class="input-group-text bg-white border border-0 "><img class=" rounded-circle"
                     [src]="'data:image/png;base64'+','+authorImage" alt="" height="35" width="35"></span>
-            <input type="text" class="form-control" id="content" formControlName="content" rows="4"
+            <input type="text" class="form-control rounded-pill" id="content" formControlName="content" rows="4"
                 placeholder="Write a comment" autocomplete="off">
-            <div *ngIf="content?.invalid && (content?.dirty || content?.touched)" class="text-danger">
-                <div *ngIf="content?.errors?.['required']">Content is required.</div>
-            </div>
-            <button type="submit" class="btn text-dark btn-outline-info"><i class="bi bi-chat-left-text-fill"></i>
+            <button type="submit" class="btn text-dark btn-outline-info border-0" [disabled]="!commentForm.valid">
+                <i class="bi bi-chat-left-text-fill"></i>
                 Comment</button>
+        </div>
+        <div *ngIf="commentForm.get('content')?.invalid && commentForm.get('content')?.dirty && commentForm.get('content')?.value" class="text-danger mt-2 ">
+            <div class="ml-5 ps-5" *ngIf="commentForm.get('content')?.errors?.['required']">Enter valid comment</div>
         </div>
     </div>
 </form>
-<app-comment-feed [postId]="post.id"></app-comment-feed>
+<app-comment-feed [postId]="post.id" [commentPage]="postDetails.comments"></app-comment-feed>

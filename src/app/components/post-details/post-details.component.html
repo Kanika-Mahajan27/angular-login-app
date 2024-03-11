@@ -1,7 +1,7 @@
-<div class="container mt-5 justify-content-center">
+<div class="container justify-content-center">
     <nav class="navbar ">
         <div class="container">
-            <a class="navbar-brand text-dark text-center" href="#"><i class="bi bi-newspaper"></i> Post</a>
+            <a class="navbar-brand text-dark text-center"><i class="bi bi-newspaper"></i> Post</a>
         </div>
     </nav>
     <div class="row p-0 m-0">
@@ -30,7 +30,7 @@
                     <div class="col-6 d-flex justify-content-center">
                         <i class="bi pt-2" [ngClass]="{ 'bi-heart': !isPostLiked(), 'bi-heart-fill text-danger': isPostLiked() }"
                             (click)="likePost(post.id)"></i>
-                        <p class="m-1">{{post.likes.length}}</p>
+                        <p class="btn m-1 p-0" data-bs-toggle="modal" [attr.data-bs-target]="'#likesModal'+post.id">{{post.likes.length}}</p>
                 
                     </div>
                     <div class="col-6 d-flex justify-content-center">
@@ -42,6 +42,31 @@
                     </div>
                     </div>
                     <div class="row p-0 m-0">
-                        <app-comment-form class="p-0 m-0" [post]="post"></app-comment-form>
+                        <app-comment-form class="p-0 m-0" [postDetails]="postDetails"></app-comment-form>
     </div>
+<div class="modal fade" [id]="'likesModal'+post.id" tabindex="-1" aria-labelledby="likesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 " id="likesModalLabel"><i class="bi bi-heart-fill text-danger"></i> Liked By
+                </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div *ngFor="let user of likedByUser">
+                    <div class="row btn d-flex flex-row" [routerLink]="user.id ? ['/user', user.id] : null" [ngClass]="{'like-user-row' : user.id}" data-bs-dismiss="modal">
+                        <div class="col-1">
+                            <img class=" rounded-circle" [src]="'data:image/png;base64'+','+user.image" alt=""
+                                height="30" width="30">
+                        </div>
+                        <div class="col-11 text-start">
+                            <p class="h6 ms-1 p-1">{{user.name}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </div>

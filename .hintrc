@@ -5,6 +5,12 @@
   "hints": {
     "axe/structure": "off",
     "axe/name-role-value": "off",
-    "axe/forms": "off"
+    "axe/forms": "off",
+    "axe/aria": [
+      "default",
+      {
+        "aria-valid-attr-value": "off"
+      }
+    ]
   }
 }

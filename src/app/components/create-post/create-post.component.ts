@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Post } from 'src/app/model/post.model';
 import { User } from 'src/app/model/user';
 import { PostsService } from 'src/app/services/posts.service';
+import { noWhitespaceValidator } from 'src/app/validators/noWhitespaceValidator';
 
 @Component({
   selector: 'app-create-post',
@@ -18,7 +19,7 @@ export class CreatePostComponent {
   user : User =  JSON.parse(localStorage.getItem("loggedUser")!);
   ngOnInit() {
     this.postForm = this.formBuilder.group({
-      content: ['', Validators.required]
+      content: ['', [Validators.required, noWhitespaceValidator()]]
     });
   }
   get content() {
@@ -42,5 +43,4 @@ export class CreatePostComponent {
       this.postForm.markAllAsTouched();
     }
   }
-
 }

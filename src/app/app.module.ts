@@ -38,6 +38,7 @@ import { ActivatedRouteSnapshot } from '@angular/router';
 import { CommentFormComponent } from './components/comment-form/comment-form.component';
 import { CommentFeedComponent } from './components/comment-feed/comment-feed.component';
 import { CommentComponent } from './components/comment/comment.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { CommentComponent } from './components/comment/comment.component';
     BackComponent,
     CommentFormComponent,
     CommentFeedComponent,
-    CommentComponent
+    CommentComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
