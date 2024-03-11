@@ -1,8 +1,10 @@
-import { ChangeDetectorRef, Component, HostListener, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, ElementRef, HostListener, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { ActivatedRoute} from '@angular/router';
 import { Notification } from 'src/app/model/notification.model';
 import { PostPage } from 'src/app/model/post-page.model';
 import { Post } from 'src/app/model/post.model';
+import { User } from 'src/app/model/user';
+import { LoginService } from 'src/app/services/login.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { PostsService } from 'src/app/services/posts.service';
 
@@ -23,8 +25,11 @@ export class FeedComponent implements OnInit{
   loadingPost : boolean =  false;
   showToastMessage: boolean = false;
   recentNotification: Notification | null = null;
+  noPosts: boolean = false;
+  user! : User;
+  @ViewChild('exampleModal') modal!: ElementRef;
 
-  constructor(private notificationService: NotificationService, private postService : PostsService, private router : Router, private cdr: ChangeDetectorRef){}
+  constructor(private notificationService: NotificationService, private postService : PostsService, private loginService : LoginService, private route:ActivatedRoute){}
 
   ngOnInit(): void {
     this.loadPosts();
@@ -34,12 +39,33 @@ export class FeedComponent implements OnInit{
         this.recentNotification = message;
       }
     });
+    this.route.paramMap.subscribe(params => {
+      const userId = params.get('id'); 
+      if (userId) {
+        this.fetchUserDetails(userId); 
+      }
+    });
+  }
+
+  fetchUserDetails(userId: any) {
+    this.loginService.getUserProfile(userId).subscribe({
+      next : (res : User) => {
+        this.user = res;
+      },
+      error : (err )=>{
+        console.error(err);
+        
+      }
+    })
   }
 
   loadPosts(){
     this.loadingPost = true;
     this.postService.getPosts(this.page,this.size,this.feed).subscribe({
       next : (res : PostPage) => { 
+        if(res.posts.length === 0){
+          this.noPosts=true;
+        }
         this.posts.push(...res.posts);
         this.total = res.total;
         this.page++;
@@ -62,7 +88,6 @@ export class FeedComponent implements OnInit{
 
   onShowToastMessageChange(showToastMessage: boolean) {
     this.showToastMessage = showToastMessage;
-    // Handle showToastMessage change here
   }
   
   public refreshFeed(){
@@ -83,4 +108,18 @@ export class FeedComponent implements OnInit{
       }
     })
   }
+
+  public get currentUser() : User {
+    return this.loginService.getLoggedUser();
+  }
+
+  dismissModal() {
+    const modalTriggerElement = document.querySelector('[data-bs-target="#exampleModal"]');
+    if (modalTriggerElement) {
+      (modalTriggerElement as HTMLElement).click(); 
+    } else {
+      console.error('Modal trigger element not found.');
+    }
+  }
+
 }

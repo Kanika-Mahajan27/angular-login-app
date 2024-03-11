@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PostDetails } from 'src/app/model/post-details.model';
 import { Post } from 'src/app/model/post.model';
 import { CommentService } from 'src/app/services/comment.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -28,8 +29,8 @@ export class PostDetailsComponent implements OnInit {
 
   fetchPostDetails(postId: string) {
     this.postsService.getPostDetails(postId).subscribe({
-      next: (post: Post) => {
-        this.post = post;
+      next: (post: PostDetails) => {
+        this.post = post.post;
         this.getcommentCount();
       },
       error: (err) => {
