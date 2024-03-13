@@ -1,30 +1,30 @@
-<div class="container">
 <div id="chat-page">
     <div class="chat-container">
-        <div class="chat-header">
+        <div class="chat-header text-center">
             <h2>Chat With {{webSocketService.receiverUsername}} </h2>
+            <hr>
         </div>
         <!-- <div *ngIf="showChatBox"> -->
-            <ul id="messageArea">
-                    <app-message></app-message>
-            </ul>
+            <div #content id="messageArea" class="scrollable-sm">
+                    <app-message (newMessage)="onNewMessage()"></app-message>
+            </div>
             <form (ngSubmit)="send(messageForm.value.message)" [formGroup]="messageForm" id="messageForm"
-                name="messageForm" nameForm="messageForm">
+                name="messageForm" nameForm="messageForm" class="sticky-bottom mb-5">
+                <div *ngIf="showEmojiPicker" (blur)="showEmojiPicker = !showEmojiPicker">
+                    <emoji-mart (emojiSelect)="addEmoji($event)" [isNative]="true"></emoji-mart> 
+                </div>
                 <div class="form-group">
                     <div class="input-group clearfix">
+                        <span (click)="showEmojiPicker = !showEmojiPicker" class="input-group-text"><i class="bi bi-emoji-smile"></i></span>
                         <input type="text" id="message" placeholder="Type your message..." autocomplete="off"
-                            class="form-control" formControlName="message" />
+                            class="form-control" formControlName="message" (focus)="showEmojiPicker = showEmojiPicker ? !showEmojiPicker : showEmojiPicker" />
                         <button type="submit" class="btn btn-dark"><i class="bi bi-send"></i> Send</button>
                     </div>
                 </div>
             </form>
     </div>
-
     <div>
         <app-notification></app-notification>
     </div>
-    
-
-</div>
 </div>
 

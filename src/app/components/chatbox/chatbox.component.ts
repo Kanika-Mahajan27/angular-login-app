@@ -1,27 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 import { MessageComponent } from '../message/message.component';
 import { Message } from '../../model/message.model';
 import { NotificationService } from 'src/app/services/notification.service';
+import { Emoji, EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
 @Component({
   selector: 'app-chatbox',
   templateUrl: './chatbox.component.html',
   styleUrls: ['./chatbox.component.css']
 })
-export class ChatboxComponent implements OnInit {
-
+export class ChatboxComponent implements OnInit , AfterViewInit {
   messageArrayLength: number = 0;
   messageSent:boolean=false;
   username: string;
+  showEmojiPicker : boolean = false;
   messageForm: FormGroup;
   receiverForm!: FormGroup;
   showChatBox:boolean=false;
   showToastMessage:boolean=false;
   recentMessage!:Message;
-  
+  @ViewChild("content") content! : ElementRef;
   constructor( public webSocketService:WebSocketService, private formBuilder:FormBuilder, private notificationService: NotificationService){
     this.username=webSocketService.username;
     this.messageForm = this.formBuilder.group({
@@ -31,9 +32,16 @@ export class ChatboxComponent implements OnInit {
       receiver: ['', Validators.required]
     })
   }
-
+  ngAfterViewInit(): void {
+    this.scrollToBottom();
+  }
+  
   receiverPresent():boolean{
     return this.webSocketService.receiverUsername!=undefined;
+  }
+  addEmoji(selected : Emoji) {
+    const emoji : string = (selected.emoji as any).native;    
+    this.messageForm.get('message')?.setValue(this.messageForm.get("message")?.value + emoji);
   }
 
   ngOnInit(): void {
@@ -44,6 +52,11 @@ export class ChatboxComponent implements OnInit {
           this.recentMessage = message;
       }
     });
+    this.webSocketService.receiver$.subscribe(receiver => {
+      setTimeout(()=>{
+        this.scrollToBottom();
+      },10)
+    })
   }
 
   send(messageContent: string): void {
@@ -54,6 +67,21 @@ export class ChatboxComponent implements OnInit {
       this.messageSent=true;
       this.messageForm.get('message')?.setValue('');
     }
+  } 
+  
+  scrollToBottom(){
+    try {
+      this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
+    } catch (error) {
+      console.warn(error)
+    }
+  }
+
+  onNewMessage() {
+    console.log("Message"); 
+    setTimeout(()=>{
+      this.scrollToBottom();
+    },10)   
   }  
 
 }
