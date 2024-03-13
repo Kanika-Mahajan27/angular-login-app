@@ -40,6 +40,7 @@ import { CommentFeedComponent } from './components/comment-feed/comment-feed.com
 import { CommentComponent } from './components/comment/comment.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { TextInputComponent } from './components/text-input/text-input.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     CommentFormComponent,
     CommentFeedComponent,
     CommentComponent,
-    SidebarComponent
+    SidebarComponent,
+    TextInputComponent
   ],
   imports: [
     BrowserModule,

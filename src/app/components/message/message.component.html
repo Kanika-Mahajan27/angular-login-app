@@ -1,12 +1,14 @@
-<div class="message-container" *ngFor="let message of messageArray; track item; let  j = index;">
-    <div class="message-container mx-3" [ngClass]="{'text-end':checkSender(message)}">
-        <div class="sender">{{ message.senderName }}</div>
-        <div class="content" [ngClass]="checkSender(message) ? 'badge-bg-success' : 'badge-bg-secondary'">
-            <p>
-                {{ message.content }}
-            </p>
-            <p><small class="small">{{message.timestamp}}</small></p>
-        </div>
-    </div> 
-    <br/>
+<div #messageArea class="scrollable-sm">
+    <div class="message-container" *ngFor="let message of messageArray; track item; let  j = index;">
+        <div class="message-container mx-3" [ngClass]="{'text-end':checkSender(message)}">
+            <div class="sender">{{ message.senderName }}</div>
+            <div class="content" [ngClass]="checkSender(message) ? 'badge-bg-success' : 'badge-bg-secondary'">
+                <p>
+                    {{ message.content }}
+                </p>
+                <p><small class="small">{{message.timestamp}}</small></p>
+            </div>
+        </div> 
+        <br/>
+    </div>
 </div>

@@ -12,7 +12,7 @@ import { Emoji, EmojiData } from '@ctrl/ngx-emoji-mart/ngx-emoji';
   templateUrl: './chatbox.component.html',
   styleUrls: ['./chatbox.component.css']
 })
-export class ChatboxComponent implements OnInit , AfterViewInit {
+export class ChatboxComponent implements OnInit {
   messageArrayLength: number = 0;
   messageSent:boolean=false;
   username: string;
@@ -32,10 +32,6 @@ export class ChatboxComponent implements OnInit , AfterViewInit {
       receiver: ['', Validators.required]
     })
   }
-  ngAfterViewInit(): void {
-    this.scrollToBottom();
-  }
-  
   receiverPresent():boolean{
     return this.webSocketService.receiverUsername!=undefined;
   }
@@ -52,11 +48,6 @@ export class ChatboxComponent implements OnInit , AfterViewInit {
           this.recentMessage = message;
       }
     });
-    this.webSocketService.receiver$.subscribe(receiver => {
-      setTimeout(()=>{
-        this.scrollToBottom();
-      },10)
-    })
   }
 
   send(messageContent: string): void {
@@ -69,19 +60,5 @@ export class ChatboxComponent implements OnInit , AfterViewInit {
     }
   } 
   
-  scrollToBottom(){
-    try {
-      this.content.nativeElement.scrollTop = this.content.nativeElement.scrollHeight;
-    } catch (error) {
-      console.warn(error)
-    }
-  }
-
-  onNewMessage() {
-    console.log("Message"); 
-    setTimeout(()=>{
-      this.scrollToBottom();
-    },10)   
-  }  
 
 }
