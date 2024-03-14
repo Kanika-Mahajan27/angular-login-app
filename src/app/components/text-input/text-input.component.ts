@@ -13,6 +13,7 @@ export class TextInputComponent {
   @Input() placeholder : string = "";
   @Input() size : string = "sm";
   @Input() emojiPicker : boolean = true;
+  @Input() pickerPosition : string = "top";
   @Input() actionTitle : string = "Send";
 
   @Output() submission : EventEmitter<string> = new EventEmitter<string>();

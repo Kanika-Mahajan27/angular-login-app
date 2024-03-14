@@ -1,0 +1,11 @@
+.picker-top{
+    position: fixed;
+    z-index: 9999;
+    transform: translateY(-110%);
+}
+
+.picker-bottom{
+    position: fixed;
+    z-index: 9999;
+    transform: translateY(1%);
+}

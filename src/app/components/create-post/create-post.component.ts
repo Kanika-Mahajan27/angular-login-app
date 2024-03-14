@@ -26,21 +26,17 @@ export class CreatePostComponent {
     return this.postForm.get('content');
   }
 
-  submitPost() {
-    if (this.postForm.valid) {
-        const post  = this.postForm.value;
-        this.postService.createPost(post).subscribe({
-          next : (res : Post)=>{
-            this.postCreated.emit();
-            this.router.navigate([`/post-details/${res.id}`]);            
-          },
-          error(err) {
-              console.error(err);
-          },
-        })
-        
-    } else {
-      this.postForm.markAllAsTouched();
-    }
+  submitPost(post : string) {
+    const postBody : Record<string,string> = {};
+    postBody["content"] = post;
+    this.postService.createPost(postBody).subscribe({
+      next : (res : Post)=>{
+        this.postCreated.emit();
+        this.router.navigate([`/post-details/${res.id}`]);            
+      },
+      error(err) {
+          console.error(err);
+      },
+    })
   }
 }
