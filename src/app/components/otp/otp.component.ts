@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { OtpService } from 'src/app/services/otp.service';
 import { Router } from '@angular/router';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 
 @Component({
   selector: 'app-otp',
@@ -14,7 +15,7 @@ export class OtpComponent {
   otp!: string;
   verificationSuccess: boolean = false;
 
-  constructor(private otpService: OtpService, private fb: FormBuilder,private router: Router ) {
+  constructor(private otpService: OtpService, private fb: FormBuilder,private router: Router, private websocketService: WebSocketService ) {
     this.otpform = this.fb.group({
       otp: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]]
     });
@@ -57,6 +58,7 @@ export class OtpComponent {
         if (response) {
           this.verificationSuccess = true;
           localStorage.setItem('authToken', response);
+          this.websocketService.join();
           this.router.navigate(['/setup']);
           
         } else {

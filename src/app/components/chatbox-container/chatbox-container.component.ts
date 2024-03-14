@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 import { LoginService } from 'src/app/services/login.service';
@@ -7,9 +7,12 @@ import { LoginService } from 'src/app/services/login.service';
   templateUrl: './chatbox-container.component.html',
   styleUrls: ['./chatbox-container.component.css']
 })
-export class ChatboxContainerComponent {
+export class ChatboxContainerComponent implements OnInit {
 
-    constructor(public webSocketService : WebSocketService, private router: Router, public loginService:LoginService){}
+  ngOnInit(): void {
+    this.webSocketService.connect();
+  }
+  constructor(public webSocketService : WebSocketService, private router: Router, public loginService:LoginService){}
 
   @HostListener('window:beforeunload', ['$event'])
   unloadHandler(event: Event): void {

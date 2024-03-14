@@ -1,12 +1,11 @@
 <div class="container">
-<div id="chat-page">
-    <div class="chat-container">
-        <div class="chat-header">
-            <h2>Chat With {{webSocketService.receiverUsername}} </h2>
-        </div>
-        <!-- <div *ngIf="showChatBox"> -->
+    <div id="chat-page">
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>Chat With {{webSocketService.receiverUsername}} </h2>
+            </div>
             <ul id="messageArea">
-                    <app-message></app-message>
+                <app-message></app-message>
             </ul>
             <form (ngSubmit)="send(messageForm.value.message)" [formGroup]="messageForm" id="messageForm"
                 name="messageForm" nameForm="messageForm">
@@ -18,13 +17,7 @@
                     </div>
                 </div>
             </form>
+        </div>
+
     </div>
-
-    <div>
-        <app-notification></app-notification>
-    </div>
-    
-
 </div>
-</div>
-
