@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../model/user';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,7 @@ export class LoginService {
    }
 
   loggedUser: User | null = null;
-  BASE_URL = 'http://localhost:8088';
+  BASE_URL = environment.authServiceUrl;
 
   public loginUserFromRemote(user: User):Observable<any>{
     const url= this.BASE_URL+'/user/login';

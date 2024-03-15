@@ -4,6 +4,7 @@ import { CompatClient, IMessage, Stomp, StompSubscription } from '@stomp/stompjs
 import * as SockJS from 'sockjs-client';
 import { Notification } from '../model/notification.model';
 import {  Observable, Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class NotificationService {
 
   constructor(public router:Router) { }
 
-  webSocketEndPoint: string = 'http://localhost:8084/websocket';
+  webSocketEndPoint: string = environment.notificationServiceUrl;
 
   connect(): void {
     if(this.stompClient && this.stompClient.active){
