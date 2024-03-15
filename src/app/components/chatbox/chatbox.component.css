@@ -3,3 +3,6 @@
     top: 5%;
     left: 80%;
 }
+.scrollable-sm{
+    overflow-anchor: none;
+}

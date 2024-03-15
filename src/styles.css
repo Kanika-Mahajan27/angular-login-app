@@ -12,6 +12,12 @@
     max-height: calc(100vh - 150px);
 }
 
+.scrollable-sm{
+    overflow-y: auto;
+    max-height: 80vh;
+    height: 80vh;
+}
+
 body {
     overflow-x: hidden;
 }

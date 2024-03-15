@@ -35,7 +35,15 @@ export class WebSocketService implements OnDestroy{
   private messageReceivedSubject: Subject<Message | null> = new Subject<Message | null>();
   public messageReceived$: Observable<Message | null> = this.messageReceivedSubject.asObservable();
 
-  constructor(public router:Router, private loginService:LoginService) { }
+  constructor(public router:Router, private loginService:LoginService) {
+      if(loginService.getLoggedUser()!=null){
+        this.username = loginService.getLoggedUser().name;
+        this.userid = loginService.getLoggedUser().id;
+        this.join()
+        this.connect()
+      }
+
+   }
 
   changeReceiver(receiver : UserInfo){
     this.receiverUsername = receiver.name;
