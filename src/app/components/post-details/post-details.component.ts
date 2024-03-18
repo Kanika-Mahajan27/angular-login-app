@@ -21,6 +21,7 @@ export class PostDetailsComponent implements OnInit {
   postDetails! : PostDetails;
   commentCount: number = 0;
   likedByUser : User[] = [];
+  loading  : boolean = false;
 
 
   constructor(private route:ActivatedRoute, private postsService:PostsService, private loginService:LoginService,private commentService : CommentService){}
@@ -34,6 +35,7 @@ export class PostDetailsComponent implements OnInit {
   }
 
   fetchPostDetails(postId: string) {
+    this.loading = true;
     this.postsService.getPostDetails(postId).subscribe({
       next: (post: PostDetails) => {
         this.post = post.post;
@@ -51,6 +53,9 @@ export class PostDetailsComponent implements OnInit {
       error: (err) => {
         console.error(err);
         // Handle error
+      },
+      complete : ()=>{
+        this.loading = false;
       }
     });
 
