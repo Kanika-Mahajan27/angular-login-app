@@ -24,7 +24,9 @@ export class SidebarComponent {
   connect(): void {
       const username=this.loginService.loggedUser?.name;
       this.websocketService.username=username!;
-      this.websocketService.join();
+      if(!this.websocketService.joinStompClient){
+        this.websocketService.join();
+      }
       this.router.navigate(['/chatbox'])
   }
 

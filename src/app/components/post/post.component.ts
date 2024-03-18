@@ -39,16 +39,6 @@ export class PostComponent implements OnInit  {
   @Output() deletePostEvent = new EventEmitter<string>();
 
   ngOnInit(): void {
-    this.notificationService.connect();
-    this.notificationService.notificationReceived$.subscribe((message) => {
-      if (message) {
-        // Show Bootstrap toast here
-        this.showToastMessage=true;
-        this.recentNotification = message;
-        this.showToastMessageChange.emit(true); // Emit event here
-        this.recentNotificationChange.emit(this.recentNotification); 
-      }
-    });
     this.getcommentCount();
     this.fetchLikedByUsers().subscribe({
       next : (res : User[]) => {
@@ -58,9 +48,6 @@ export class PostComponent implements OnInit  {
         console.warn(err);
       }
     })
-  }
-  showBootstrapToast(message: Notification):void {
-    
   }
 
   formatDate(date : Date) {

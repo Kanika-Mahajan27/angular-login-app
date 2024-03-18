@@ -29,16 +29,10 @@ export class FeedComponent implements OnInit{
   user! : User;
   @ViewChild('exampleModal') modal!: ElementRef;
 
-  constructor(private notificationService: NotificationService, private postService : PostsService, private loginService : LoginService, private route:ActivatedRoute){}
+  constructor(private postService : PostsService, private loginService : LoginService, private route:ActivatedRoute){}
 
   ngOnInit(): void {
     this.loadPosts();
-    this.notificationService.notificationReceived$.subscribe((message) => {
-      if (message) {
-        this.showToastMessage = true;
-        this.recentNotification = message;
-      }
-    });
     this.route.paramMap.subscribe(params => {
       const userId = params.get('id'); 
       if (userId) {
@@ -84,10 +78,6 @@ export class FeedComponent implements OnInit{
       if (this.last == false && this.loadingPost == false) {
         this.loadPosts();
       }
-  }
-
-  onShowToastMessageChange(showToastMessage: boolean) {
-    this.showToastMessage = showToastMessage;
   }
   
   public refreshFeed(){

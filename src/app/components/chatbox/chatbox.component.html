@@ -4,11 +4,7 @@
             <h2>Chat With {{webSocketService.receiverUsername}} </h2>
             <hr>
         </div>
-            <app-message></app-message>
-            <app-text-input [actionTitle]="'Send'" [emojiPicker]="true" [placeholder]="'Type a message'" [size]="'sm'" (submission)="send($event)" class="sticky-bottom mb-5"></app-text-input>
-    </div>
-    <div>
-        <app-notification></app-notification>
+        <app-message></app-message>
+        <app-text-input [actionTitle]="'Send'" [emojiPicker]="true" [placeholder]="'Type a message'" [size]="'sm'" (submission)="send($event)" class="sticky-bottom mb-5"></app-text-input>
     </div>
 </div>
-

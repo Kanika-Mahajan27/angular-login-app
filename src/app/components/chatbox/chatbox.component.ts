@@ -41,8 +41,7 @@ export class ChatboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.notificationService.connect();
-    this.webSocketService.connect();
+
     this.webSocketService.messageReceived$.subscribe((message) => {
       if (message) {
           this.recentMessage = message;

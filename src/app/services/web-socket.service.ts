@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { StatusMessage } from '../model/status-message.model';
 import { LoginService } from './login.service';
 import { UserInfo } from '../model/userInfo.model';
+import { User } from '../model/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -75,14 +76,12 @@ export class WebSocketService implements OnDestroy{
   }
 
   connect(): void {
-    console.log(this.userid, this.username);
     if(this.stompClient && this.stompClient.active){
       return;
     }
     const socket = new SockJS(this.webSocketEndPoint);
     this.stompClient = Stomp.over(socket);
     const _this = this;
-    console.log(_this.userid);
     _this.stompClient.connect({}, function (frame: any) {
       _this.stompClient.subscribe("/user/"+_this.userid+"/private", function (sdkEvent) {
           _this.onMessageReceived(sdkEvent);
@@ -168,28 +167,40 @@ export class WebSocketService implements OnDestroy{
       this.stompClient.disconnect();
     }
   }
-
   
   ngOnDestroy(): void {
     this.leaveChat(this.username);
   }
 
   private onLeave(username: string): void {
-    const leaveMessage = new StatusMessage();
-    leaveMessage.senderName = username;
-    leaveMessage.senderId=this.userid;
-
-    this.stompClient.send(
-      '/app/chat.unregister',
-      {},
-      JSON.stringify(leaveMessage)    
-    );
+    if(this.stompClient && this.stompClient.connected){
+      const leaveMessage = new StatusMessage();
+      leaveMessage.senderName = username;
+      leaveMessage.senderId=this.userid;
+      this.stompClient.send(
+        '/app/chat.unregister',
+        {},
+        JSON.stringify(leaveMessage)    
+      );
+    }
+    else{
+      console.log("No STOMP connection");
+    }
+    
   }
 
   leaveChat(username: string): void {
     if (this.stompClient) {
+      const emptyUser: UserInfo = {
+        id: "",
+        name: "",
+        status: ""
+      };
       this.onLeave(username);
-      this.stompClient.disconnect();
+      this.changeReceiver(emptyUser);
+      if(this.stompClient && this.stompClient.active){
+        this.stompClient.disconnect();
+      }
     }
   }
 }
