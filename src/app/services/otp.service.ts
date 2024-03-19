@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export class OtpService {
 
-  private baseUrl = environment.authServiceUrl;
+  private baseUrl = environment.baseUrl+'/auth';
   otpVerified: boolean=false;
   constructor(private http: HttpClient) { }
 

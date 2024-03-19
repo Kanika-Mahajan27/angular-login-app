@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class CommentService {
-  BASE_URL : string = environment.commentServiceUrl;
+  BASE_URL : string = environment.baseUrl+'/comments';
   constructor(private http : HttpClient) { }
 
   addComment(comment : any){

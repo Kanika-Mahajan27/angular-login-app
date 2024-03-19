@@ -16,7 +16,7 @@ export class LoginService {
    }
 
   loggedUser: User | null = null;
-  BASE_URL = environment.authServiceUrl;
+  BASE_URL = environment.baseUrl+'/auth';
 
   public loginUserFromRemote(user: User):Observable<any>{
     const url= this.BASE_URL+'/user/login';
@@ -25,7 +25,6 @@ export class LoginService {
         console.log('Server Response:', res);
         this.loggedUser=res.user;
         console.log(this.loggedUser);
-        // this.storeLoggedUser(res.user);
       return res.user;
     })
     );
@@ -53,7 +52,6 @@ export class LoginService {
   logoutUser(): void {
     // Remove the token from local storage
     localStorage.removeItem('authToken');
-    // localStorage.removeItem('loggedUser');
     this.loggedUser=null;
     this.router.navigate(['/login']);
   }

@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PostsService {
-  private BASE_URL = environment.postServiceUrl;
+  private BASE_URL = environment.baseUrl+'/posts';
   likedPosts : string[] = [];
   totalLikes! : number;
   constructor(private httpClient : HttpClient) { }

@@ -1,13 +1,12 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { CompatClient, Stomp, StompSubscription } from '@stomp/stompjs';
-import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subject} from 'rxjs';
 import * as SockJS from 'sockjs-client';
 import { Message } from '../model/message.model';
 import { Router } from '@angular/router';
 import { StatusMessage } from '../model/status-message.model';
 import { LoginService } from './login.service';
 import { UserInfo } from '../model/userInfo.model';
-import { User } from '../model/user';
 import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
