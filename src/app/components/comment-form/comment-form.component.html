@@ -1,17 +1,10 @@
-<form [formGroup]="commentForm" (ngSubmit)="submitComment()">
-    <div class="form-group mt-3 ">
-        <div class="input-group mb3">
-            <span class="input-group-text bg-white border border-0 "><img class=" rounded-circle"
-                    [src]="'data:image/png;base64'+','+authorImage" alt="" height="35" width="35"></span>
-            <input type="text" class="form-control rounded-pill" id="content" formControlName="content" rows="4"
-                placeholder="Write a comment" autocomplete="off">
-            <button type="submit" class="btn text-dark btn-outline-info border-0" [disabled]="!commentForm.valid">
-                <i class="bi bi-chat-left-text-fill"></i>
-                Comment</button>
-        </div>
-        <div *ngIf="commentForm.get('content')?.invalid && commentForm.get('content')?.dirty && commentForm.get('content')?.value" class="text-danger mt-2 ">
-            <div class="ml-5 ps-5" *ngIf="commentForm.get('content')?.errors?.['required']">Enter valid comment</div>
-        </div>
+<div class="row flex-row">
+    <div class="col-1 d-flex p-1 justify-content-center">
+        <span class="bg-white border border-0 "><img class=" rounded-circle"
+                [src]="'data:image/png;base64'+','+authorImage" alt="" height="35" width="35"></span>
     </div>
-</form>
+    <div class="col-11 p-1 ">
+        <app-text-input [placeholder]="'Write a comment...'" [actionTitle]="'Comment'" [pickerPosition]="'bottom'" (submission)="submitComment($event)"></app-text-input>    
+    </div>
+</div>
 <app-comment-feed [postId]="post.id" [commentPage]="postDetails.comments"></app-comment-feed>

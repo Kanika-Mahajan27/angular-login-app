@@ -35,25 +35,21 @@ constructor(private fb : FormBuilder,private commentService : CommentService,pri
   }
 
 
-submitComment() {
-  if(this.commentForm.valid){
-    let commentBody : Record<string,string> = {};
-    commentBody["postId"] = this.post.id;
-    commentBody["postAuthorId"] = this.post.author.id;
-    commentBody["content"] = this.commentForm.get("content")?.value;
-    this.commentService.addComment(commentBody).subscribe({
-      next : (res : Comment) => {
-        this.commentForm.reset();
-        this.commentFeedComponent.addComment(res);
-      },
-      error : (err) => {
-        console.error(err);
-        
-      }
-    })
-  }else{
-    this.commentForm.markAllAsTouched();
-  }
+submitComment(comment : string) {
+  let commentBody : Record<string,string> = {};
+  commentBody["postId"] = this.post.id;
+  commentBody["postAuthorId"] = this.post.author.id;
+  commentBody["content"] = comment;
+  this.commentService.addComment(commentBody).subscribe({
+    next : (res : Comment) => {
+      this.commentForm.reset();
+      this.commentFeedComponent.addComment(res);
+    },
+    error : (err) => {
+      console.error(err);
+      
+    }
+  })
 }
 
 get authorImage(){

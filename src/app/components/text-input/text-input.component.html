@@ -1,0 +1,40 @@
+<form (ngSubmit)="emitSubmission(inputForm.value.text)" [formGroup]="inputForm" id="inputForm"
+    name="inputForm" nameForm="inputForm">
+    <div *ngIf="size === 'sm'">
+        <div class="form-group">
+            <div class="input-group clearfix">
+                <span (click)="showEmojiPicker = !showEmojiPicker" class="input-group-text" *ngIf="emojiPicker" ><i class="bi bi-emoji-smile"></i></span>
+                <input type="text" id="text" [placeholder]="placeholder"  autocomplete="off"
+                class="form-control" formControlName="text" (focus)="showEmojiPicker = showEmojiPicker ? !showEmojiPicker : showEmojiPicker" />
+                <button type="submit" class="btn btn-outline info" [disabled]="!inputForm.valid"><i class="bi bi-send"></i> {{actionTitle}}</button>
+            </div>
+            <div *ngIf="text?.invalid && text?.dirty && text?.value" class="text-danger">
+                <div *ngIf="text?.errors?.['required']">Input is empty.</div>
+            </div>
+            <div *ngIf="showEmojiPicker" (blur)="showEmojiPicker = !showEmojiPicker" [ngClass]="{'picker-top' : pickerPosition==='top' , 'picker-bottom' : pickerPosition === 'bottom'}">
+                <emoji-mart (emojiSelect)="addEmoji($event)" [isNative]="true"></emoji-mart> 
+            </div>
+        </div>
+    </div>
+    <div *ngIf="size === 'lg'">
+        <div class="input-group clearfix d-flex flex-column" style="width: 100%;">
+            <div class="row m-0">
+                <textarea class="form-control  border rounded-top" id="text" formControlName="text" rows="4" [placeholder]="placeholder" (focus)="showEmojiPicker = showEmojiPicker ? !showEmojiPicker : showEmojiPicker"></textarea>
+                <div *ngIf="text?.invalid && text?.dirty && text?.value" class="text-danger">
+                    <div *ngIf="text?.errors?.['required']">Text is required.</div>
+                </div>
+            </div>
+            <div class="row m-0 p-1 border border-dark rounded-bottom">
+                <div class="col-2 m-0 p-0">
+                    <span (click)="showEmojiPicker = !showEmojiPicker" class="input-group-text border-0" *ngIf="emojiPicker" ><i class="bi bi-emoji-smile"></i></span>
+                </div>
+                <div class="col-10 d-flex justify-content-end">
+                    <button type="submit" class="btn text-dark bg-info-subtle p-0 ps-1 pe-1" [disabled]="!inputForm.valid"><i class="bi bi-newspaper"></i> {{actionTitle}} </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="showEmojiPicker" (blur)="showEmojiPicker = !showEmojiPicker" [ngClass]="{'picker-top' : pickerPosition==='top' , 'picker-bottom' : pickerPosition === 'bottom'}">
+            <emoji-mart (emojiSelect)="addEmoji($event)" [isNative]="true"></emoji-mart> 
+        </div>
+    </div>
+</form>
