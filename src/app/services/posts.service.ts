@@ -4,12 +4,13 @@ import { PostPage } from '../model/post-page.model';
 import { Observable, of } from 'rxjs';
 import { Post } from '../model/post.model';
 import { PostDetails } from '../model/post-details.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostsService {
-  private BASE_URL = "http://localhost:8086/posts";
+  private BASE_URL = environment.baseUrl+'/posts';
   likedPosts : string[] = [];
   totalLikes! : number;
   constructor(private httpClient : HttpClient) { }

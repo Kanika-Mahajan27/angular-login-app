@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CommentPage } from '../model/comment-page.model';
 import { Comment } from '../model/comment.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommentService {
-  BASE_URL : string = "http://localhost:8182/comments"
+  BASE_URL : string = environment.baseUrl+'/comments';
   constructor(private http : HttpClient) { }
 
   addComment(comment : any){
